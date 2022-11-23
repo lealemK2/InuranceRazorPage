@@ -1,0 +1,25 @@
+﻿@page
+@model InuranceRazorPage.Pages.UserModel
+@{
+
+}
+
+<table>
+    <thead>
+    <th>#</th>
+    <th>firstname</th>
+    <th>username</th>
+    <th>cbhid</th>
+    </thead>
+    <tbody>
+        @foreach(var _user in Model.Users){
+            <tr>
+                <td>@_user.Id</td>
+                <td>@_user.Firstname</td>
+                <td>@_user.Username</td>
+                <td>@_user.CbhiId</td>
+                <td> <a href="/User/@_user.Id">Show details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
