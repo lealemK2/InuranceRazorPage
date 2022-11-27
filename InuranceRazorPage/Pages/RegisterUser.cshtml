@@ -3,8 +3,8 @@
 @{
     Layout = "~/Pages/Shared/_LayoutEmpty.cshtml";
 }
-
-    <div class="container py-5 h-100">
+    <form method="post">
+        <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
                 <div class="card card-registration my-4">
@@ -22,14 +22,16 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="form3Example1m" class="form-control form-control-lg" />
+                                            <input name="User.Firstname" type="text" id="form3Example1m" class="form-control form-control-lg" />
                                             <label class="form-label" for="form3Example1m">First name</label>
+                                            <span asp-validation-for="@Model.User.Firstname" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="form3Example1n" class="form-control form-control-lg" />
+                                        <input name="User.Fathername" type="text" id="form3Example1n" class="form-control form-control-lg" />
                                             <label class="form-label" for="form3Example1n">Father name</label>
+                                            <span asp-validation-for="@Model.User.Fathername" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -37,86 +39,94 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="form3Example1m1" class="form-control form-control-lg" />
+                                        <input name="User.Lastname" type="text" id="form3Example1m1" class="form-control form-control-lg" />
                                             <label class="form-label" for="form3Example1m1">Last name</label>
+                                            <span asp-validation-for="@Model.User.Lastname" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example8" class="form-control form-control-lg" />
+                                <input name="User.Username" type="text" id="form3Example8" class="form-control form-control-lg" />
                                     <label class="form-label" for="form3Example8">Username</label>
+                                    <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
                                 </div>
+
                             <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" />
+                                <input name="Password" type="text" id="form3Example8" class="form-control form-control-lg" />
                                 <label class="form-label" for="form3Example8">Password</label>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" />
-                                <label class="form-label" for="form3Example8">cbhi ID</label>
+                                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
                             </div>
 
-                                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+                            <div class="form-outline mb-4">
+                                <input name="" type="text" id="form3Example8" class="form-control form-control-lg" />
+                                <label class="form-label" for="form3Example8">cbhi ID</label>
+                                    <span  class="text-danger"></span>
+                            </div>
+
+                                 <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
 
                                     <h6 class="mb-0 me-4">Gender: </h6>
 
                                     <div class="form-check form-check-inline mb-0 me-4">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                               value="option1" />
+                                    <input name="User.Gender" class="form-check-input" type="radio"  id="femaleGender"
+                                               value="Female" />
                                         <label class="form-check-label" for="femaleGender">Female</label>
                                     </div>
 
                                     <div class="form-check form-check-inline mb-0 me-4">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                               value="option2" />
+                                    <input name="User.Gender" class="form-check-input" type="radio"  id="maleGender"
+                                               value="Male" />
                                         <label class="form-check-label" for="maleGender">Male</label>
                                     </div>
+                                    <span asp-validation-for="@Model.User.Gender" class="text-danger"></span>
 
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
 
-                                        <select class="select">
+                                    <select name="User.Kebele" class="select">
                                             <option value="1">Kebele</option>
                                             <option value="2">Option 1</option>
                                             <option value="3">Option 2</option>
                                             <option value="4">Option 3</option>
                                         </select>
+                                        <span asp-validation-for="@Model.User.Address.Kebele" class="text-danger"></span>
 
                                     </div>
                                     <div class="col-md-6 mb-4">
 
-                                        <select class="select">
+                                    <select name="User.Woreda" class="select">
                                             <option value="1">Woreda</option>
                                             <option value="2">Option 1</option>
                                             <option value="3">Option 2</option>
                                             <option value="4">Option 3</option>
                                         </select>
-
+                                        <span asp-validation-for="@Model.User.Address.Woreda" class="text-danger"></span>
                                     </div>
                                 </div>
                                 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example9" class="form-control form-control-lg" />
+                                <input name="User.Dob" type="text" id="form3Example9" class="form-control form-control-lg" />
                                     <label class="form-label" for="form3Example9">DOB</label>
                                 </div>
 
                                 <div class="col-md-6 mb-4">
 
-                                    <select class="select">
+                                <select asp-for="Role" name="User.Role" class="select">
                                         <option value="1">Role</option>
-                                        <option value="2">Option 1</option>
-                                        <option value="3">Option 2</option>
-                                        <option value="4">Option 3</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Staff">Staff</option>
+                                        <option value="Employee">Employee</option>
                                     </select>
-
+                                    <span asp-validation-for="@Model.Role" class="text-danger"></span>
                                 </div>
-
+                                
 
                                 <div class="d-flex justify-content-end pt-3">
-                                    <button type="button" class="btn btn-light btn-lg">Reset all</button>
-                                    <button type="button" class="btn btn-warning btn-lg ms-2">Submit form</button>
+                                    <button type="reset" class="btn btn-light btn-lg">Reset all</button>
+                                    <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
                                 </div>
 
                             <a href="/index" class="link-secondary">go back to home</a>
@@ -128,3 +138,6 @@
             </div>
         </div>
     </div>
+    </form>
+
+

@@ -13,11 +13,11 @@ namespace InuranceRazorPage.Pages
             {
                 new User() {
                     Id=1, Firstname = "Lealem",  Fathername="kifle", Lastname="Bedlu", Username="lalusr",
-                    Role="admin",CbhiId="lalcbhid"
+                    
                 },
                 new User() {
                     Id=2, Firstname = "Cozy",  Fathername="kifle", Lastname="Bedlu", Username="cozusr",
-                    Role="employee",CbhiId="cozcbhid"
+                    
                 }
             };
         }
