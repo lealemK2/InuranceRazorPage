@@ -1,0 +1,50 @@
+﻿@page
+@model InuranceRazorPage.Pages.Accounts.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Account.Id" />
+            <div class="form-group">
+                <label asp-for="Account.Firstname" class="control-label"></label>
+                <input asp-for="Account.Firstname" class="form-control" />
+                <span asp-validation-for="Account.Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Username" class="control-label"></label>
+                <input asp-for="Account.Username" class="form-control" />
+                <span asp-validation-for="Account.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.PasswordHash" class="control-label"></label>
+                <input asp-for="Account.PasswordHash" class="form-control" />
+                <span asp-validation-for="Account.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.PasswordSalt" class="control-label"></label>
+                <input asp-for="Account.PasswordSalt" class="form-control" />
+                <span asp-validation-for="Account.PasswordSalt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

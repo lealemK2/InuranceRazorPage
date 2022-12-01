@@ -6,8 +6,9 @@
         public string Firstname { get; set; } = null!;
         public string Fathername { get; set; } = null!;
         public string Lastname { get; set; } = null!;
-        public string Username { get; set; } = null!;
-        public string BaseCbhiId { get; set; } = null!;
+        public string CbhiIdUsername { get; set; } = null!;
+        public int CbhiId { get; set; }
+        public Cbhi Cbhi { get; set; } = null!;
         public int nthMember { get; set; }
         public string ImagePath { get; set; } = null!;
         public string Phone { get; set; } = null!;

@@ -3,11 +3,12 @@
     public class Enrollement
     {
         public int Id { get; set; }
-        public int AccountId { get; set; }
-        Account Account { get; set; } = null!;
+        public int CbhiId { get; set; }
+        public Cbhi Cbhi { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsPaid { get; set; }
+        public bool IsExpired { get; set; }
         public int PackageId { get; set; }
         public Package Package { get; set; }=null!;
     }

@@ -1,4 +1,4 @@
-﻿namespace InuranceRazorPage.Data.Models
+﻿namespace InuranceRazorPage.Models
 {
     public class Account
     {
