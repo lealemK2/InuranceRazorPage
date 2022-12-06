@@ -19,6 +19,5 @@
         public int Age { get; set; }
         public DateTime Createdon { get; set; }
         public bool IsActive { get; set; }
-        public int LocationId { get; set; }
     }
 }

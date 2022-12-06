@@ -13,40 +13,43 @@ namespace InuranceRazorPage.Pages.Accounts
 {
     public class CreateModel : PageModel
     {
-        private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
+        //private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
 
-        public CreateModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
-        {
-            _context = context;
-        }
+        //public CreateModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
+        //{
+        //    _context = context;
+        //}
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        //public IActionResult OnGet()
+        //{
+        //    return Page();
+        //}
 
-        public Account Account { get; set; }
+        ////[BindProperty]
+        ////public Account Account { get; set; }
 
-        [BindProperty]
-        public LoginDto LoginDto { get; set; }
+        //[BindProperty]
+        //public LoginDto LoginDto { get; set; }
 
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid)
-            {
-                int x = 10;
-                return Page();
-            }
-            int z = 20;
+        //// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        //public async Task<IActionResult> OnPostAsync()
+        //{
 
-            //_context.Account.Add(Account);
-            await _context.SaveChangesAsync();
 
-            int y = 20;
+        //  if (!ModelState.IsValid)
+        //    {
+        //        int x = 10;
+        //        return Page();
+        //    }
+        //    int z = 20;
 
-            return RedirectToPage("./Index");
-        }
+        //    //_context.Account.Add(Account);
+        //    await _context.SaveChangesAsync();
+
+        //    int y = 20;
+
+        //    return RedirectToPage("./Index");
+        //}
     }
 }

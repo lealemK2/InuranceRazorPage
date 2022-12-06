@@ -1,5 +1,9 @@
-﻿namespace InuranceRazorPage.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace InuranceRazorPage.Models
 {
+    [Index(nameof(Account.Username), IsUnique = true)]
     public class Account
     {
         public int Id { get; set; }

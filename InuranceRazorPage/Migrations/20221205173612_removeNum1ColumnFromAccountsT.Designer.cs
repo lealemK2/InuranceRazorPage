@@ -2,6 +2,7 @@
 using InuranceRazorPage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InuranceRazorPage.Migrations
 {
     [DbContext(typeof(InuranceRazorPageContext))]
-    partial class InuranceRazorPageContextModelSnapshot : ModelSnapshot
+    [Migration("20221205173612_removeNum1ColumnFromAccountsT")]
+    partial class removeNum1ColumnFromAccountsT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

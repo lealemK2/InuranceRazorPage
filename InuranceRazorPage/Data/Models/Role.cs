@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string RoleName { get; set; } = null!;
-        //clerk,asyadmin,manag
+        //clerk,syadmin, manag
     }
 }
