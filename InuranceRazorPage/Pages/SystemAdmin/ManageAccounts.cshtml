@@ -1,5 +1,5 @@
 ﻿@page
-@model InuranceRazorPage.Pages.SystemAdmin.ManageUsersModel
+@model InuranceRazorPage.Pages.SystemAdmin.ManageAccountsModel
 @{
     Layout = "_admin";
 }
@@ -15,16 +15,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4>Manage Users</h4>
+                <h4>Manage Accounts</h4>
             </div>
         </div>
-        <div class="row hoverable ">
-            <div class="col-md-3 mb-3 hoverable" }">
-            <div class="card bg-primary text-white h-100 ">
-                <div class="card-body py-5">Add User</div>
+        <a asp-page="./Accounts/Create">
+            <div class="row">
+                <div class="col-md-3 mb-3" }">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body py-5">Add User</div>
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
+        </a>
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div class="card">
@@ -70,7 +72,6 @@ style="width: 100%">
     </tbody>
     <tfoot>
         <tr>
-            <th>Id </th>
             <th>Firstname</th>
             <th>Username</th>
             <th>Password Hash</th>

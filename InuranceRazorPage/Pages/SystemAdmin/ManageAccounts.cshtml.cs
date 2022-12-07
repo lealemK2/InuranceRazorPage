@@ -1,18 +1,20 @@
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace InuranceRazorPage.Pages.SystemAdmin
 {
-    public class ManageUsersModel : PageModel
+    //[Authorize]
+    public class ManageAccountsModel : PageModel
     {
         //public void OnGet()
         //{
         //}
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
 
-        public ManageUsersModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
+        public ManageAccountsModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
         {
             _context = context;
         }

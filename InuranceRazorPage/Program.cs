@@ -1,13 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using InuranceRazorPage.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/Denied";
+    });
 builder.Services.AddDbContext<InuranceRazorPageContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefualtConnection")));
+
+builder.Services.AddRazorPages(options =>
+{
+    //options.Conventions.AuthorizePage("/Contact");
+    options.Conventions.AuthorizeFolder("/Accounts");
+    //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+    //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+});
 
 var app = builder.Build();
 

@@ -1,0 +1,46 @@
+﻿@page
+@model InuranceRazorPage.Pages.SystemAdmin.Accounts.CreateModel
+@{
+}
+
+<h1>Create</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Firstname" class="control-label"></label>
+    <input asp-for="AccountDto.Firstname" class="form-control" />
+    <span asp-validation-for="AccountDto.Firstname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Username" class="control-label"></label>
+    <input asp-for="AccountDto.Username" class="form-control" />
+    <span asp-validation-for="AccountDto.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Password" class="control-label"></label>
+    <input asp-for="AccountDto.Password" class="form-control" type="password"/>
+    <span asp-validation-for="AccountDto.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+    </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-page="../ManageAccounts">Go back</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
