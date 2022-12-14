@@ -3,6 +3,7 @@ using System;
 using InuranceRazorPage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InuranceRazorPage.Migrations
 {
     [DbContext(typeof(InuranceRazorPageContext))]
-    partial class InuranceRazorPageContextModelSnapshot : ModelSnapshot
+    [Migration("20221209051004_makeSubcityUniqueILocations")]
+    partial class makeSubcityUniqueILocations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,10 @@ namespace InuranceRazorPage.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Createdon")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("Dob")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Fathername")
                         .IsRequired()
@@ -61,7 +64,7 @@ namespace InuranceRazorPage.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("LocationId")
                         .HasColumnType("integer");
 
                     b.Property<byte[]>("PasswordHash")
@@ -76,9 +79,6 @@ namespace InuranceRazorPage.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text");
@@ -88,8 +88,6 @@ namespace InuranceRazorPage.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -148,23 +146,6 @@ namespace InuranceRazorPage.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("InuranceRazorPage.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("InuranceRazorPage.Models.Account", b =>
                 {
                     b.HasOne("InuranceRazorPage.Models.Address", "Address")
@@ -173,25 +154,16 @@ namespace InuranceRazorPage.Migrations
 
                     b.HasOne("InuranceRazorPage.Models.Location", "Location")
                         .WithMany("Accounts")
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("InuranceRazorPage.Models.Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Location", b =>
-                {
-                    b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.Role", b =>
                 {
                     b.Navigation("Accounts");
                 });

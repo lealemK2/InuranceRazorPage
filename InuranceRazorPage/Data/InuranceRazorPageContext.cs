@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using InuranceRazorPage.Models;
 using Microsoft.EntityFrameworkCore;
-using InuranceRazorPage.Models;
 
 namespace InuranceRazorPage.Data
 {
@@ -14,6 +10,17 @@ namespace InuranceRazorPage.Data
         {
         }
 
-        public DbSet<InuranceRazorPage.Models.Account> Accounts { get; set; } = default!;
+        public DbSet<Account> Accounts { get; set; } = default!;
+        public DbSet<Address> Addresses { get; set; } = default!;
+        public DbSet<Location> Locations { get; set; } = default!;
+        public DbSet<Role> Roles { get; set; } = default!;
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Account>()
+        //        .HasOne(b => b.Location)
+        //        .WithMany(a => a.Accounts)
+        //        .HasForeignKey(a => a.LocationId);
+        //}
     }
 }

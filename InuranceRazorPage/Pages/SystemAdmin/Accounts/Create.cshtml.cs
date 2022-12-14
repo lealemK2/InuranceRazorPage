@@ -2,6 +2,7 @@ using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
@@ -20,19 +21,28 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        //public IActionResult OnGet()
+        //{
+        //    return Page();
+        //}
 
-        [BindProperty]
+        [BindProperty,Required]
         public AccountDto AccountDto { get; set; }
 
-        //public Account Account { get; set; }
+        public string[] GenderOptions = new[] { "Male", "Female"};
+
 
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (AccountDto.Gender == "") {
+                ModelState.AddModelError("AccountDto.Gender", "Gender field is required");
+            }
+            if (AccountDto.RoleId==0)
+            {
+                ModelState.AddModelError("AccountDto.RoleId", "Plese select a role");
+            }
+
             if (UsernameExists(AccountDto.Username))
             {
                 ModelState.AddModelError("AccountDto.Username", "Username is already taken!");
@@ -47,9 +57,16 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             var Account = new Account
             {
                 Firstname = AccountDto.Firstname,
-                Username=AccountDto.Username,
+                Fathername = AccountDto.Fathername,
+                Lastname = AccountDto.Lastname,
+                Username = AccountDto.Username,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Phone = AccountDto.Phone,
+                Gender = AccountDto.Gender,
+                Dob = AccountDto.Dob.Date,
+                RoleId=AccountDto.RoleId,
+                Createdon = DateTime.Now
             };
             _context.Accounts.Add(Account);
             await _context.SaveChangesAsync();

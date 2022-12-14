@@ -10,12 +10,22 @@
 <div class="row">
     <div class="col-md-4">
 
-    <form method="post">
+    <form method="post"> 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
     <label asp-for="AccountDto.Firstname" class="control-label"></label>
     <input asp-for="AccountDto.Firstname" class="form-control" />
     <span asp-validation-for="AccountDto.Firstname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Fathername" class="control-label"></label>
+    <input asp-for="AccountDto.Fathername" class="form-control" />
+    <span asp-validation-for="AccountDto.Fathername" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Lastname" class="control-label"></label>
+    <input asp-for="AccountDto.Lastname" class="form-control" />
+    <span asp-validation-for="AccountDto.Lastname" class="text-danger"></span>
     </div>
     <div class="form-group">
     <label asp-for="AccountDto.Username" class="control-label"></label>
@@ -27,6 +37,41 @@
     <input asp-for="AccountDto.Password" class="form-control" type="password"/>
     <span asp-validation-for="AccountDto.Password" class="text-danger"></span>
     </div>
+    <div class="form-group">
+    <label asp-for="AccountDto.Phone" class="control-label"></label>
+    <input asp-for="AccountDto.Phone" class="form-control" type="tel" pattern="[0-9]{4}-[0-9]{6}" />
+    <span asp-validation-for="AccountDto.Phone" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="AccountDto.Gender" class="control-label">Gender</label>
+        <div>
+            @foreach (var gender in Model.GenderOptions)
+            {
+                <input type="radio" asp-for="AccountDto.Gender" value="@gender" />
+                @gender
+                <br />
+            }
+            <span asp-validation-for="AccountDto.Gender" class="text-danger"></span>
+        </div>
+    </div>
+    <div>
+        <label asp-for="AccountDto.Dob" class="control-label" >Date Of Birth</label>
+        <input class="form-control" asp-for="AccountDto.Dob" type="date"/>
+        <span asp-validation-for="AccountDto.Dob" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AccountDto.RoleId" class="control-label">Role</label>
+        <select name="AccountDto.RoleId">
+            <option value="0">Select a Role</option>
+            <option value="1">SystemAdmin</option>
+            <option value="2">Clerk</option>
+            <option value="3">Manager</option>
+        </select>
+        <span asp-validation-for="AccountDto.RoleId" class="text-danger"></span>
+    </div>
+
+
     <div class="form-group">
     <input type="submit" value="Create" class="btn btn-primary" />
     </div>

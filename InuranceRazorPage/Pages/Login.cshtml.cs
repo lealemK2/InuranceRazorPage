@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using InuranceRazorPage.Data.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace InuranceRazorPage.Pages
 {
@@ -23,8 +26,11 @@ namespace InuranceRazorPage.Pages
             _context = context;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()//string returnUrl = null
         {
+            //returnUrl ??= Url.Content("~/");
+            var error=ModelState.ToString();
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -39,11 +45,54 @@ namespace InuranceRazorPage.Pages
 
             if (!VerifyPasswordHash(LoginDto.Password, account.PasswordHash, account.PasswordSalt))
             {
-                ModelState.AddModelError("LoginDto.Password", "Incorrect Password!");
+                ModelState.AddModelError("LoginDto.Password", "Incorrect Password!");             
+
                 return Page();
             }
 
+            //
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, LoginDto.Username),
+                    //new Claim("FullName", user.FullName),
+                    new Claim(ClaimTypes.Role, "Admin"),
+                };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                //AllowRefresh = <bool>,
+                // Refreshing the authentication session should be allowed.
+
+                //ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                // The time at which the authentication ticket expires. A 
+                // value set here overrides the ExpireTimeSpan option of 
+                // CookieAuthenticationOptions set with AddCookie.
+
+                //IsPersistent = true,
+                // Whether the authentication session is persisted across 
+                // multiple requests. When used with cookies, controls
+                // whether the cookie's lifetime is absolute (matching the
+                // lifetime of the authentication ticket) or session-based.
+
+                //IssuedUtc = <DateTimeOffset>,
+                // The time at which the authentication ticket was issued.
+
+                //RedirectUri = <string>
+                // The full path or absolute URI to be used as an http 
+                // redirect response value.
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(identity),
+                    authProperties);
+
+            //
+
             return RedirectToPage("Index");
+            //return LocalRedirect(returnUrl);
         }
 
         private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)

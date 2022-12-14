@@ -1,9 +1,10 @@
-﻿@page
+﻿@page "{handler?}"
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
     Layout = "_LayoutWithNav";
 }
+
 
 <div class="w-100">
     <img src="@Url.Content("~/images/index.jpg")" style="margin-top: 100px; margin-left: 70px; margin-bottom: 50px; max-width: 100%;

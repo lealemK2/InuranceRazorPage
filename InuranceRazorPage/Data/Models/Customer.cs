@@ -13,11 +13,13 @@
         public string ImagePath { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public int AddressId { get; set; }
-        public Address Address { get; set; } = null!;
+        //public Address Address { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public DateTime Dob { get; set; }
         public int Age { get; set; }
         public DateTime Createdon { get; set; }
         public bool IsActive { get; set; }
+        public int RoleId { get; set; }
+        //public Role Role { get; set; }
     }
 }
