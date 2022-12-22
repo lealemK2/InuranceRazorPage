@@ -26,8 +26,6 @@ namespace InuranceRazorPage.Models
 
         public int? LocationId { get; set; }
         public Location Location { get; set; } = null!;
-
-        public int? RoleId { get; set; }
-        public Role Role { get; set; } = null!;
+        public List<AccountRole> AccountRoles { get; set; }
     }
 }

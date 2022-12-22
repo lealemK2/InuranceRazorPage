@@ -7,5 +7,8 @@
         public string Kebele { get; set; } = null!;
         public int Woreda { get; set; }
         public int HouseNumber { get; set; }
+        //navigation
+        public Account Account { get; set; }
+
     }
 }

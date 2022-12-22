@@ -3,6 +3,7 @@ using System;
 using InuranceRazorPage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InuranceRazorPage.Migrations
 {
     [DbContext(typeof(InuranceRazorPageContext))]
-    partial class InuranceRazorPageContextModelSnapshot : ModelSnapshot
+    [Migration("20221220090958_improvedSchema")]
+    partial class improvedSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,29 +95,6 @@ namespace InuranceRazorPage.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.AccountRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AccountRoles");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Address", b =>
@@ -200,30 +180,6 @@ namespace InuranceRazorPage.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("InuranceRazorPage.Models.AccountRole", b =>
-                {
-                    b.HasOne("InuranceRazorPage.Models.Account", "Account")
-                        .WithMany("AccountRoles")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InuranceRazorPage.Models.Role", "Role")
-                        .WithMany("AccountRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.Account", b =>
-                {
-                    b.Navigation("AccountRoles");
-                });
-
             modelBuilder.Entity("InuranceRazorPage.Models.Address", b =>
                 {
                     b.Navigation("Account")
@@ -234,11 +190,6 @@ namespace InuranceRazorPage.Migrations
                 {
                     b.Navigation("Account")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.Role", b =>
-                {
-                    b.Navigation("AccountRoles");
                 });
 #pragma warning restore 612, 618
         }

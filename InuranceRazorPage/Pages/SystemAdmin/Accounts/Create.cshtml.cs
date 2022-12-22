@@ -54,7 +54,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             }
 
             CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            var Account = new Account
+            var account = new Account
             {
                 Firstname = AccountDto.Firstname,
                 Fathername = AccountDto.Fathername,
@@ -65,10 +65,16 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 Phone = AccountDto.Phone,
                 Gender = AccountDto.Gender,
                 Dob = AccountDto.Dob.Date,
-                RoleId=AccountDto.RoleId,
+                //RoleId=AccountDto.RoleId,
                 Createdon = DateTime.Now
             };
-            _context.Accounts.Add(Account);
+            var accountRole = new AccountRole
+            {
+                RoleId = AccountDto.RoleId,
+                Account=account
+            };
+            _context.AccountRoles.Add(accountRole);
+            _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("../ManageAccounts");

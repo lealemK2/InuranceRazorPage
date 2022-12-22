@@ -9,6 +9,6 @@ namespace InuranceRazorPage.Models
         public string Subcity { get; set; } = null!;
         public string Kebele { get; set; } = null!;
         //navigation
-        public List<Account> Accounts { get; set; } = null!;
+        public Account Account { get; set; }
     }
 }

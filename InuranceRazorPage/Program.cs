@@ -9,6 +9,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -28,10 +29,17 @@ builder.Services.AddRazorPages(options =>
     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
 });
-//builder.Services.Configure<IISServerOptions>(options =>
-//{
-//    options.AutomaticAuthentication = false;
-//});
+
+//builder.Services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>();
+//repeated builder.Services.AddDbContext<InuranceRazorPageContext>();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>();
+
+
+
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+//          .AddEntityFrameworkStores<InuranceRazorPageContext>()
+//        .AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 
@@ -46,7 +54,6 @@ var cookiePolicyOptions = new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Strict,
 };
-app.UseCookiePolicy(cookiePolicyOptions);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -55,6 +62,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCookiePolicy(cookiePolicyOptions);
 
 app.MapRazorPages();
 

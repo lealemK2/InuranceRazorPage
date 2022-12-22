@@ -26,11 +26,11 @@ namespace InuranceRazorPage.Pages
             _context = context;
         }
 
-        public async Task<IActionResult> OnPostAsync()//string returnUrl = null
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            //returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             var error=ModelState.ToString();
-
+            ModelState.Remove("returnUrl");
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -54,8 +54,8 @@ namespace InuranceRazorPage.Pages
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, LoginDto.Username),
-                    //new Claim("FullName", user.FullName),
-                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "Admin")
                 };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -89,10 +89,8 @@ namespace InuranceRazorPage.Pages
                     new ClaimsPrincipal(identity),
                     authProperties);
 
-            //
-
-            return RedirectToPage("Index");
-            //return LocalRedirect(returnUrl);
+            //return RedirectToPage("Index");
+            return LocalRedirect(returnUrl);
         }
 
         private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
