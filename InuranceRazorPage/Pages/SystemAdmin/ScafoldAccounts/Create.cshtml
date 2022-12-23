@@ -39,9 +39,10 @@
     </div>
     <div class="form-group">
     <label asp-for="AccountDto.Phone" class="control-label"></label>
-    <input asp-for="AccountDto.Phone" class="form-control" type="tel" pattern="[0-9]{4}-[0-9]{6}" />
+    <input asp-for="AccountDto.Phone" class="form-control" type="tel" pattern="[0-9]{4}[0-9]{6}" />
     <span asp-validation-for="AccountDto.Phone" class="text-danger"></span>
     </div>
+
     <div>
         <label asp-for="AccountDto.Gender" class="control-label">Gender</label>
         <div>
@@ -64,13 +65,26 @@
         <label asp-for="AccountDto.RoleId" class="control-label">Role</label>
         <select name="AccountDto.RoleId">
             <option value="0">Select a Role</option>
-            <option value="1">SystemAdmin</option>
-            <option value="2">Clerk</option>
-            <option value="3">Manager</option>
+            @foreach (var item in Model.Roles){
+                <option value="@item.Id">@item.RoleName</option>
+            }
         </select>
         <span asp-validation-for="AccountDto.RoleId" class="text-danger"></span>
     </div>
+    <div>
+        <label asp-for="AccountDto.Subcity" class="control-label">Address</label>
+                <select name="AccountDto.Subcity" onchange="GetWoreda()" id="Subcity">
+                    <option value="0">Subcity</option>
+                    @foreach (var item in Model.Subcities)
+                    {
+                            <option value="@item.Id">@item.Name</option>
+                    }
+        </select>
+        <span asp-validation-for="AccountDto.Subcity" class="text-danger"></span>
+        <div id="_WoredaPartial">
 
+        </div>
+    </div>
 
     <div class="form-group">
     <input type="submit" value="Create" class="btn btn-primary" />
@@ -89,3 +103,14 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }
+<script type="text/javascript">
+        //function GetWoreda(){
+        //    $.get("/SystemAdmin/Accounts/Create", {
+        //        SubcityId: $("#Subcity").val()
+        //    }, function (data) {
+        //        $("#_WoredaPartial").html(data);
+        //    })
+        //}
+</script>
+
+

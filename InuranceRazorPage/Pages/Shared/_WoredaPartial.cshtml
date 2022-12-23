@@ -1,0 +1,15 @@
+﻿@page
+@model InuranceRazorPage.Pages.SystemAdmin.Accounts.CreateModel
+@{
+}
+
+<div>
+    <select name="AccountDto.Address.Woreda">
+        <option value="0">Woreda</option>
+        @foreach (var item in Model.Subcities)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+    <span asp-validation-for="AccountDto" class="text-danger"></span>
+</div>

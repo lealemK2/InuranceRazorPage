@@ -18,16 +18,11 @@
                 <h4>Manage Accounts</h4>
             </div>
         </div>
-        <a asp-page="./Accounts/Create">
-            <div class="row">
-                <div class="col-md-3 mb-3" }">
-                    <div class="card bg-primary text-white h-100">
-                        <div class="card-body py-5">Add User</div>
-                    </div>
-                </div>
-            </div>
+        <a asp-page="./Accounts/Create" >
+            <button type="button" class="btn btn-primary">Create User</button>
         </a>
-        <div class="row">
+        
+        <div class="row" style="margin-top : 20px">
             <div class="col-md-12 mb-3">
                 <div class="card">
                     <div class="card-header">
@@ -41,41 +36,56 @@ class="table table-striped data-table"
 style="width: 100%">
     <thead>
         <tr>
-            <th>Firstname</th>
+            <th>Name</th>
             <th>Username</th>
-            <th>Password Hash</th>
-            <th>Password Salt</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>BirthDate</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Accounts) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
+                @Html.DisplayFor(modelItem => item.Firstname) 
+                @Html.DisplayFor(modelItem => item.Fathername) 
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
+                @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PasswordSalt)
+                @Html.DisplayFor(modelItem => item.Gender)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.role.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dob.Month)/
+                @Html.DisplayFor(modelItem => item.Dob.Day)/
+                @Html.DisplayFor(modelItem => item.Dob.Year)
+            </td>
+
+            <td>
+                <a asp-page="./Accounts/Edit" asp-route-id="@item.Id">Edit</a> |  
+                <a asp-page="./Accounts/Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Accounts/Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }       
     </tbody>
     <tfoot>
         <tr>
-            <th>Firstname</th>
+            <th>Name</th>
             <th>Username</th>
-            <th>Password Hash</th>
-            <th>Password Salt</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th>BirthDate</th>
         </tr>
     </tfoot>
 </table>

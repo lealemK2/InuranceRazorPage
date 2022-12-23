@@ -17,7 +17,7 @@ namespace InuranceRazorPage.Models
         public string Phone { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public int Age { get; set; }
-        public bool IsActive { get; set; }=false;
+        public bool IsActive { get; set; } = false;
         public DateTime Dob { get; set; }
         public DateTime Createdon { get; set; }
         //Navigations
@@ -26,6 +26,8 @@ namespace InuranceRazorPage.Models
 
         public int? LocationId { get; set; }
         public Location Location { get; set; } = null!;
-        public List<AccountRole> AccountRoles { get; set; }
+
+        public int RoleId { get; set; }
+        public Role role { get; set; }
     }
 }

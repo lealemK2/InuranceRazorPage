@@ -14,6 +14,7 @@ namespace InuranceRazorPage.Dto
         public DateTime Dob { get; set; }
         public int RoleId { get; set; }
         //public Address Address { get; set; } = null!;
+        public String Subcity { get; set; } = null!;
         //public Location Location { get; set; } = null!;
     }
 }

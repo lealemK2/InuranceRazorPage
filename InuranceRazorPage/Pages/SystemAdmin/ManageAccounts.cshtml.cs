@@ -20,12 +20,16 @@ namespace InuranceRazorPage.Pages.SystemAdmin
         }
 
         public IList<Account> Accounts { get; set; } = default!;
-
+        
         public async Task OnGetAsync()
         {
             if (_context.Accounts != null)
             {
-                Accounts = await _context.Accounts.ToListAsync();
+                Accounts = await _context.Accounts.Include(a => a.role).ToListAsync();
+            }
+            else
+            {
+                Accounts = new List<Account>();
             }
         }
     }

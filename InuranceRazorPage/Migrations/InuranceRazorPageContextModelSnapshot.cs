@@ -76,45 +76,25 @@ namespace InuranceRazorPage.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
+                    b.HasIndex("AddressId");
 
-                    b.HasIndex("LocationId")
-                        .IsUnique();
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.AccountRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AccountRoles");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Address", b =>
@@ -128,18 +108,18 @@ namespace InuranceRazorPage.Migrations
                     b.Property<int>("HouseNumber")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Kebele")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Kebele")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Subcity")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("SubcityId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Woreda")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubcityId");
 
                     b.ToTable("Addresses");
                 });
@@ -152,18 +132,20 @@ namespace InuranceRazorPage.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Kebele")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Subcity")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<int>("SubcityId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("Subcity")
-                        .IsUnique();
+                    b.Property<int>("kebele")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("woreda")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Locations");
                 });
@@ -182,63 +164,132 @@ namespace InuranceRazorPage.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleName")
+                        .IsUnique();
+
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("InuranceRazorPage.Models.Subcity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Subcities");
+                });
+
+            modelBuilder.Entity("InuranceRazorPage.Models.SubcityRange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SubcityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WoredaRange")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubcityId")
+                        .IsUnique();
+
+                    b.ToTable("SubcityRanges");
+                });
+
+            modelBuilder.Entity("InuranceRazorPage.Models.WoredaRange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("KebeleRange")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubcityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Woreda")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubcityId");
+
+                    b.ToTable("WoredaRanges");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Account", b =>
                 {
                     b.HasOne("InuranceRazorPage.Models.Address", "Address")
-                        .WithOne("Account")
-                        .HasForeignKey("InuranceRazorPage.Models.Account", "AddressId");
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("InuranceRazorPage.Models.Location", "Location")
-                        .WithOne("Account")
-                        .HasForeignKey("InuranceRazorPage.Models.Account", "LocationId");
+                        .WithMany()
+                        .HasForeignKey("LocationId");
 
-                    b.Navigation("Address");
-
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("InuranceRazorPage.Models.AccountRole", b =>
-                {
-                    b.HasOne("InuranceRazorPage.Models.Account", "Account")
-                        .WithMany("AccountRoles")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InuranceRazorPage.Models.Role", "Role")
-                        .WithMany("AccountRoles")
+                    b.HasOne("InuranceRazorPage.Models.Role", "role")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("Address");
 
-                    b.Navigation("Role");
-                });
+                    b.Navigation("Location");
 
-            modelBuilder.Entity("InuranceRazorPage.Models.Account", b =>
-                {
-                    b.Navigation("AccountRoles");
+                    b.Navigation("role");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Address", b =>
                 {
-                    b.Navigation("Account")
+                    b.HasOne("InuranceRazorPage.Models.Subcity", "Subcity")
+                        .WithMany()
+                        .HasForeignKey("SubcityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Subcity");
                 });
 
-            modelBuilder.Entity("InuranceRazorPage.Models.Location", b =>
+            modelBuilder.Entity("InuranceRazorPage.Models.SubcityRange", b =>
                 {
-                    b.Navigation("Account")
+                    b.HasOne("InuranceRazorPage.Models.Subcity", "Subcity")
+                        .WithMany()
+                        .HasForeignKey("SubcityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Subcity");
                 });
 
-            modelBuilder.Entity("InuranceRazorPage.Models.Role", b =>
+            modelBuilder.Entity("InuranceRazorPage.Models.WoredaRange", b =>
                 {
-                    b.Navigation("AccountRoles");
+                    b.HasOne("InuranceRazorPage.Models.Subcity", "Subcity")
+                        .WithMany()
+                        .HasForeignKey("SubcityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subcity");
                 });
 #pragma warning restore 612, 618
         }
