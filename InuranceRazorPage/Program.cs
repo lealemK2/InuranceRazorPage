@@ -30,16 +30,6 @@ builder.Services.AddRazorPages(options =>
     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
 });
 
-//builder.Services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>();
-//repeated builder.Services.AddDbContext<InuranceRazorPageContext>();
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>();
-
-
-
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//          .AddEntityFrameworkStores<InuranceRazorPageContext>()
-//        .AddDefaultTokenProviders();
-
 
 var app = builder.Build();
 
@@ -63,6 +53,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCookiePolicy(cookiePolicyOptions);
+
 
 app.MapRazorPages();
 

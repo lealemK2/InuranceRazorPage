@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace InuranceRazorPage.Pages.SystemAdmin
 {
-    //[Authorize(Roles ="Admin")]
-    //[Authorize]
+    [Authorize(Roles ="SystemAdmin")]
     public class IndexModel : PageModel
     {
         public void OnGet()

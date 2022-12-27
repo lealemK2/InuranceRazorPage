@@ -31,9 +31,9 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 
         public string[] GenderOptions = new[] { "Male", "Female"};
 
-        [DisplayName("Subjects")]
+        //[DisplayName("Subjects")]
+        [BindProperty]
         public List<Role> Roles { get; set; } = default!;
-        //[BindProperty]
         public List<Subcity> Subcities { get; set; } = default!;
         public async Task OnGetAsync()
         {
@@ -57,51 +57,73 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 
 
         public async Task<IActionResult> OnPostAsync()
+        {
+            if (_context.Roles != null)
             {
-                if (AccountDto.Gender == "") {
-                    ModelState.AddModelError("AccountDto.Gender", "Gender field is required");
-                }
-                if (AccountDto.RoleId==0)
-                {
-                    ModelState.AddModelError("AccountDto.RoleId", "Plese select a role");
-                }
+                var role = await _context.Roles.ToListAsync();
+                Roles = role.ToList();
+            }
+            else
+            {
+                Roles = new List<Role>();
+            }
+            if (_context.Subcities != null)
+            {
+                Subcities = await _context.Subcities.ToListAsync();
+            }
+            else
+            {
+                Subcities = new List<Subcity>();
+            }
+            if (AccountDto.Gender == "") 
+            {
+                ModelState.AddModelError("AccountDto.Gender", "Gender field is required");
+            }
+            if (AccountDto.RoleId==0)
+            {
+                ModelState.AddModelError("AccountDto.RoleId", "Plese select a role");
+            }
+            if (String.IsNullOrEmpty(AccountDto.Subcity))
+            {
+                ModelState.AddModelError("AccountDto.Subcity", "Plese select a subcity");
+            }
 
-                if (UsernameExists(AccountDto.Username))
-                {
-                    ModelState.AddModelError("AccountDto.Username", "Username is already taken!");
-                }
-                string strRegex = @"(^[0-9]{4}[0-9]{6})";
-                Regex re = new Regex(strRegex);
-                if (!re.IsMatch(AccountDto.Phone))
-                {
-                    ModelState.AddModelError("AccountDto.Phone", "Wrong Phone pattern! use 09*** format");
-                }
+            if (UsernameExists(AccountDto.Username))
+            {
+                ModelState.AddModelError("AccountDto.Username", "Username is already taken!");
+            }
+            //string strRegex = @"(^[0-9]{4}[0-9]{6})";
+            //Regex re = new Regex(strRegex);
+            //if (!re.IsMatch(AccountDto.Phone))
+            //{
+            //    ModelState.AddModelError("AccountDto.Phone", "Wrong Phone pattern! use 09*** format");
+            //}
 
-                if (!ModelState.IsValid)
-                {
-                    return Page();
-                }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
-                CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-                var account = new Account
-                {
-                    Firstname = AccountDto.Firstname,
-                    Fathername = AccountDto.Fathername,
-                    Lastname = AccountDto.Lastname,
-                    Username = AccountDto.Username,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                    Phone = AccountDto.Phone,
-                    Gender = AccountDto.Gender,
-                    Dob = AccountDto.Dob.Date,
-                    RoleId=AccountDto.RoleId,
-                    Createdon = DateTime.Now
-                };
-                _context.Accounts.Add(account);
+            CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            var account = new Account
+            {
+                Firstname = AccountDto.Firstname,
+                Fathername = AccountDto.Fathername,
+                Lastname = AccountDto.Lastname,
+                Username = AccountDto.Username,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Phone = AccountDto.Phone,
+                Gender = AccountDto.Gender,
+                Dob = AccountDto.Dob.Date,
+                RoleId=AccountDto.RoleId,
+                Createdon = DateTime.Now
+            };
+            _context.Accounts.Add(account);
             //subcity to address
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-                return RedirectToPage("../ManageAccounts");
+            return RedirectToPage("../ManageAccounts");
          }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

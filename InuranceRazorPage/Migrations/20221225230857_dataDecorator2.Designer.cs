@@ -3,6 +3,7 @@ using System;
 using InuranceRazorPage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InuranceRazorPage.Migrations
 {
     [DbContext(typeof(InuranceRazorPageContext))]
-    partial class InuranceRazorPageContextModelSnapshot : ModelSnapshot
+    [Migration("20221225230857_dataDecorator2")]
+    partial class dataDecorator2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,13 +47,11 @@ namespace InuranceRazorPage.Migrations
 
                     b.Property<string>("Fathername")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -61,8 +62,7 @@ namespace InuranceRazorPage.Migrations
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("integer");

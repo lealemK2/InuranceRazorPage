@@ -7,6 +7,7 @@ using InuranceRazorPage.Data.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using InuranceRazorPage.Models;
 
 namespace InuranceRazorPage.Pages
 {
@@ -36,7 +37,7 @@ namespace InuranceRazorPage.Pages
                 return Page();
             }
 
-            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Username.ToLower() == LoginDto.Username.ToLower());
+            var account = await _context.Accounts.Include(a=>a.role).FirstOrDefaultAsync(a => a.Username.ToLower() == LoginDto.Username.ToLower());
             if (account == null)
             {
                 ModelState.AddModelError("LoginDto.Username", "Username Does not exist!");
@@ -49,13 +50,12 @@ namespace InuranceRazorPage.Pages
 
                 return Page();
             }
-
             //
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, LoginDto.Username),
                     new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
-                    new Claim(ClaimTypes.Role, "Admin")
+                    new Claim(ClaimTypes.Role, account.role.RoleName)
                 };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
