@@ -6,7 +6,7 @@
 <h1>Delete</h1>
 
 <h4>Account</h4>
-<div class="col-lg-8" style="margin-top:100px">
+@*<div class="col-lg-8" style="margin-top:100px">
     <div class="card mb-4">
         <div class="card-body">
             <div class="row">
@@ -64,40 +64,47 @@
                     <p class="text-muted mb-0">@Model.Account.role.RoleName </p>
                 </div>
             </div>
-            @*<hr>
-            <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">(097) 234-5678</p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Mobile</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">(098) 765-4321</p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                </div>
-            </div>*@
+            
         </div>
     </div>
 
-</div>
+</div>*@
 
-<form method="post">
+@*<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Account.Firstname)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Account.Firstname)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Account.Username)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Account.Username)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Account.PasswordHash)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Account.PasswordHash)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Account.PasswordSalt)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Account.PasswordSalt)
+    </dd>
+</dl>*@
+
+@*<form method="post">
     <input type="hidden" asp-for="Account.Id" />
     <input type="submit" value="Delete" class="btn btn-danger" /> |
-    <a asp-page="../ManageAccounts">Back to List</a>
+    <a asp-page="./ManageAccounts">Back to List</a>
+</form>*@
+
+<form method="post">
+    <div class="button">
+        <input type="submit" value="Delete" class="btn btn-danger">
+    </div>
 </form>

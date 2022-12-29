@@ -1,10 +1,14 @@
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
+    [Authorize(Roles = "SystemAdmin")]
+
     public class DeleteModel : PageModel
     {
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
@@ -13,13 +17,25 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         {
             _context = context;
         }
-        public Account Account { get; set; } = default!;
+        [BindProperty]
+        public Account Account { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (_context.Accounts != null)
+            if (id == null || _context.Accounts == null)
             {
-                Account = await _context.Accounts.Include(a => a.role).FirstOrDefaultAsync(a => a.Id == id);
+                return NotFound();
+            }
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (account == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                Account = account;
             }
             return Page();
         }
@@ -38,7 +54,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ManageAccounts");
         }
     }
 }

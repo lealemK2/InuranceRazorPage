@@ -3,15 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
-namespace InuranceRazorPage.Pages.SystemAdmin
+namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
-    //[Authorize]
+    [Authorize(Roles = "SystemAdmin")]
     public class ManageAccountsModel : PageModel
     {
-        //public void OnGet()
-        //{
-        //}
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
 
         public ManageAccountsModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
@@ -20,7 +18,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin
         }
 
         public IList<Account> Accounts { get; set; } = default!;
-        
+
         public async Task OnGetAsync()
         {
             if (_context.Accounts != null)

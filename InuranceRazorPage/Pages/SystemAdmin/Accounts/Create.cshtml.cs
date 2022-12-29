@@ -1,23 +1,24 @@
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel;
+using System.Data;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
+    [Authorize(Roles = "SystemAdmin")]
     public class CreateModel : PageModel
-    {
-       
-
-
-
+    {  
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
 
         public CreateModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
@@ -34,6 +35,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         //[DisplayName("Subjects")]
         [BindProperty]
         public List<Role> Roles { get; set; } = default!;
+        [BindProperty]
         public List<Subcity> Subcities { get; set; } = default!;
         public async Task OnGetAsync()
         {
@@ -75,35 +77,35 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 Subcities = new List<Subcity>();
             }
-            if (AccountDto.Gender == "") 
+            if (AccountDto.Gender == null) 
             {
-                ModelState.AddModelError("AccountDto.Gender", "Gender field is required");
+                ModelState.AddModelError("AccountDto.Gender", "The Gender field is required");
             }
+
             if (AccountDto.RoleId==0)
             {
-                ModelState.AddModelError("AccountDto.RoleId", "Plese select a role");
+                ModelState.AddModelError("AccountDto.RoleId", "Please select a Role");
             }
-            if (String.IsNullOrEmpty(AccountDto.Subcity))
+            if (AccountDto.SubcityId==0)
             {
-                ModelState.AddModelError("AccountDto.Subcity", "Plese select a subcity");
+                ModelState.AddModelError("AccountDto.Subcity", "Please select a Subcity");
             }
 
             if (UsernameExists(AccountDto.Username))
             {
                 ModelState.AddModelError("AccountDto.Username", "Username is already taken!");
             }
-            //string strRegex = @"(^[0-9]{4}[0-9]{6})";
-            //Regex re = new Regex(strRegex);
-            //if (!re.IsMatch(AccountDto.Phone))
-            //{
-            //    ModelState.AddModelError("AccountDto.Phone", "Wrong Phone pattern! use 09*** format");
-            //}
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
+            Address address = new Address() { 
+                SubcityId = AccountDto.SubcityId,
+                Woreda = AccountDto.Woreda,
+                Kebele = AccountDto.Kebele,
+            };
             CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var account = new Account
             {
@@ -116,14 +118,15 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 Phone = AccountDto.Phone,
                 Gender = AccountDto.Gender,
                 Dob = AccountDto.Dob.Date,
-                RoleId=AccountDto.RoleId,
+                Address = address,
+                RoleId =AccountDto.RoleId,
                 Createdon = DateTime.Now
             };
+            _context.Addresses.Add(address);
             _context.Accounts.Add(account);
-            //subcity to address
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../ManageAccounts");
+            return RedirectToPage("./ManageAccounts");
          }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -145,15 +148,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             }
         }
 
-        public ActionResult GetWoreda(int subcityId)
-        {
-            Task<System.Collections.Generic.List<InuranceRazorPage.Models.WoredaRange>> Woredas=null;
-            if (_context.WoredaRanges != null)
-            {
-                Woredas =_context.WoredaRanges.Where(item => item.SubcityId==subcityId).ToListAsync();
-            }
-            return Partial("_WoredaPartial", Woredas);
-        }
+        
 
     }
 }

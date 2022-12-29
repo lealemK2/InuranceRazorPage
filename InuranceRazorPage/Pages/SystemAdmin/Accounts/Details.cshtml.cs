@@ -1,10 +1,13 @@
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
+    [Authorize(Roles = "SystemAdmin")]
     public class DetailModel : PageModel
     {
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;

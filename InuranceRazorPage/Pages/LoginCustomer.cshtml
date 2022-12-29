@@ -1,0 +1,44 @@
+﻿@page
+@model InuranceRazorPage.Pages.LoginCustomerModel
+@{
+}
+
+<section class="vh-100">
+    <div class="container-fluid h-custom " style="margin-top: 100px">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="@Url.Content("~/images/health.png")"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form method="post">
+                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                        <h3 class="mb-5 text-uppercase">Customer Login</h3>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <span asp-validation-for="cbhiUsername" class="text-danger"></span>
+                        <input asp-for="cbhiUsername" id="form3Example3" class="form-control form-control-lg"
+                               placeholder="Enter CBHI ID" />
+                        <label asp-for="cbhiUsername" class="form-label" for="form3Example3">CBHI ID</label>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-warning btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            Login
+                        </button>
+                    </div>
+                    <a href="/index" class="link-secondary">go back to home</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

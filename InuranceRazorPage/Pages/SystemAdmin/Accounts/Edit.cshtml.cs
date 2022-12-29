@@ -1,12 +1,18 @@
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Cryptography;
+using System.Security.Principal;
+using System.Xml.Linq;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
+    [Authorize(Roles = "SystemAdmin")]
     public class EditModel : PageModel
     {
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
@@ -18,10 +24,14 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 
         [BindProperty]
         public AccountDto AccountDto { get; set; }
+
         public string[] GenderOptions = new[] { "Male", "Female" };
         public IList<Role> Roles { get; set; } = default!;
         public IList<Subcity> Subcities { get; set; } = default!;
-        public Account Account { get; set; } = default!;
+        public Account account { get; set; } = default!;
+        public IEnumerable<SelectListItem> Genders;
+        //public IEnumerable<SelectListItem> Roles2;
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,65 +43,112 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 Subcities = await _context.Subcities.ToListAsync();
             }
-            if (id == null || _context.Accounts == null)
-            {
+            if (id == null || _context.Accounts == null){         
                 return NotFound();
             }
 
-            Account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
-            AccountDto = new AccountDto();
-            AccountDto.Firstname = Account.Firstname;
-            AccountDto.Fathername = Account.Fathername;
-            AccountDto.Lastname = Account.Lastname;
-            AccountDto.Username = Account.Username;
-            AccountDto.Phone = Account.Phone;
-            AccountDto.Gender = Account.Gender;
-            AccountDto.Dob = Account.Dob;
-            AccountDto.RoleId=Account.RoleId;
-            //AccountDto.Address.Subcity = account.Address.Subcity;
-            AccountDto.RoleId = 2;
-            if (Account == null)
+            Account account = await _context.Accounts.Include(e => e.Address).FirstOrDefaultAsync(a => a.Id == id);
+            if (account == null)
             {
                 return NotFound();
             }
-            //AccountDto.
+            AccountDto = new AccountDto();
+            AccountDto.Firstname = account.Firstname;
+            AccountDto.Fathername = account.Fathername;
+            AccountDto.Lastname = account.Lastname;
+            AccountDto.Username = account.Username;
+            AccountDto.Phone = account.Phone;
+            AccountDto.Gender = account.Gender;
+            AccountDto.Dob = account.Dob;
+            AccountDto.RoleId=account.RoleId;
+            AccountDto.SubcityId = account.Address == null ? 0: account.Address.SubcityId;
+            AccountDto.Woreda= account.Address == null ? 0 : account.Address.Woreda;
+            AccountDto.Kebele = account.Address == null ? 0 : account.Address.Kebele;
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id )
         {
-            if (AccountDto.Gender == "")
+            if (_context.Roles != null)
             {
-                ModelState.AddModelError("AccountDto.Gender", "Gender field is required");
+                Roles = await _context.Roles.ToListAsync();
+            }
+            else
+            {
+                Roles = new List<Role>();
+            }
+            if (_context.Subcities != null)
+            {
+                Subcities = await _context.Subcities.ToListAsync();
+            }
+            else
+            {
+                Subcities = new List<Subcity>();
             }
 
-            ModelState.Remove("AccountDto.Password");
+            if (AccountDto.Gender==null)
+            {
+                ModelState.AddModelError("AccountDto.Gender", "The Gender field is required");
+            }
+            if (AccountDto.RoleId == 0)
+            {
+                ModelState.AddModelError("AccountDto.RoleId", "Please select a Role");
+            }
+            if (AccountDto.SubcityId == 0)
+            {
+                ModelState.AddModelError("AccountDto.SubcityId", "Please select a Subcity");
+            }
+            if (AccountDto.Woreda == 0)
+            {
+                ModelState.AddModelError("AccountDto.Woreda", "Please select a Woreda");
+            }
+            //if (AccountDto.Woreda == 0)
+            //{
+            //    ModelState.AddModelError("AccountDto.Woreda", "Please select a Woreda");
+            //}
+            //if (AccountDto.Kebele == 0)
+            //{
+            //    ModelState.AddModelError("AccountDto.Woreda", "Please select a Kebele");
+            //}
+
+            if (string.IsNullOrEmpty(AccountDto.Password))//not the same
+            {
+                ModelState.Remove("AccountDto.Password");
+            }
+
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            //
-            var Account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
-            Account.Firstname = AccountDto.Firstname;
-            Account.Fathername = AccountDto.Fathername;
-            Account.Lastname = AccountDto.Lastname;
-            Account.Username = AccountDto.Username;
-            Account.Phone = AccountDto.Phone;
-            Account.Gender = AccountDto.Gender;
-            Account.Dob = AccountDto.Dob.Date;
-            Account.RoleId = AccountDto.RoleId;
-            if (!String.IsNullOrEmpty( AccountDto.Password))
+
+            var account = new Account();
+            account=await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
+            account.Firstname = AccountDto.Firstname;
+            account.Fathername = AccountDto.Fathername;
+            account.Lastname = AccountDto.Lastname;
+            account.Username = AccountDto.Username;
+            account.Phone = AccountDto.Phone;            
+            account.Dob = AccountDto.Dob.Date;
+            account.Gender = AccountDto.Gender;
+            account.RoleId = AccountDto.RoleId;
+
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == account.AddressId);
+            address.SubcityId = AccountDto.SubcityId;
+            address.Woreda = AccountDto.Woreda;
+            address.Kebele = AccountDto.Kebele;
+
+
+            if (!string.IsNullOrEmpty(AccountDto.Password))//not the same
             {
+                
                 CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-                Account.PasswordHash= passwordHash;
-                Account.PasswordSalt= passwordSalt;
+                account.PasswordHash= passwordHash;
+                account.PasswordSalt= passwordSalt;
             }
-
-            _context.Accounts.Update(Account);
-            //_context.Attach(Account).State = EntityState.Modified;
-            //_context.Entry(Account).Property(x => x.PasswordHash).IsModified = true;
-            //_context.Entry(Account).Property(x => x.PasswordSalt).IsModified = true;
-
+            _context.Addresses.Update(address);
+            _context.Accounts.Update(account);
 
             try
             {
@@ -99,7 +156,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AccountExists(Account.Id))
+                if (!AccountExists(account.Id))
                 {
                     return base.NotFound();
                 }
@@ -109,7 +166,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 }
             }
 
-            return RedirectToPage("../ManageAccounts");
+            return RedirectToPage("./ManageAccounts");
         }
 
         private bool AccountExists(int id)

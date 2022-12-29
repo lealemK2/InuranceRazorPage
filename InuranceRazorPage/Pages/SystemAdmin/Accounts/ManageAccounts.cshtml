@@ -1,0 +1,101 @@
+﻿@page
+@model InuranceRazorPage.Pages.SystemAdmin.Accounts.ManageAccountsModel
+@{
+    Layout = "_Dashboard";
+}
+
+
+<!-- top navigation bar -->
+<partial name="_DashboardNavPartial"></partial>
+<!-- top navigation bar -->
+<!-- offcanvas -->
+<partial name="_SystemAdminPartial"></partial>
+<!-- offcanvas -->
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Manage Accounts</h4>
+            </div>
+        </div>
+        <a asp-page="./Create">
+            <button type="button" class="btn btn-primary">Create User</button>
+        </a>
+
+        <div class="row" style="margin-top : 20px">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="bi bi-table me-2"></i></span> Accounts Table
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <table id="example"
+                                   class="table table-striped data-table"
+                                   style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Phone</th>
+                                        <th>Gender</th>
+                                        <th>Role</th>
+                                        <th>BirthDate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Accounts)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Firstname)
+                                                @Html.DisplayFor(modelItem => item.Fathername)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Username)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Gender)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.role.RoleName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Dob.Month)/
+                                                @Html.DisplayFor(modelItem => item.Dob.Day)/
+                                                @Html.DisplayFor(modelItem => item.Dob.Year)
+                                            </td>
+
+                                            <td>
+                                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Phone</th>
+                                        <th>Gender</th>
+                                        <th>Role</th>
+                                        <th>BirthDate</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -4,95 +4,131 @@
 }
 
 
-<h1>Edit</h1>
+@{
+    Layout = "_form";
+}
 
-<h4>Account</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container">
+    <div class="title">Update Account</div>
+    <div class="content">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Firstname" class="control-label"></label>
-                <input asp-for="AccountDto.Firstname" class="form-control" />
-                <span asp-validation-for="AccountDto.Firstname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Fathername" class="control-label"></label>
-                <input asp-for="AccountDto.Fathername" class="form-control" />
-                <span asp-validation-for="AccountDto.Fathername" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Lastname" class="control-label"></label>
-                <input asp-for="AccountDto.Lastname" class="form-control" />
-                <span asp-validation-for="AccountDto.Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Username" class="control-label"></label>
-                <input asp-for="AccountDto.Username" class="form-control" />
-                <span asp-validation-for="AccountDto.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Password" class="control-label"></label>
-                <input asp-for="AccountDto.Password" class="form-control" type="password" />
-                <span asp-validation-for="AccountDto.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountDto.Phone" class="control-label"></label>
-                <input asp-for="AccountDto.Phone" class="form-control" type="tel" pattern="[0-9]{4}[0-9]{6}" />
-                <span asp-validation-for="AccountDto.Phone" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="AccountDto.Gender" class="control-label">Gender</label>
-                <div>
-                    @foreach (var gender in Model.GenderOptions)
-                    {
-                        <input type="radio" asp-for="AccountDto.Gender" value="@gender" />
-                        @gender
-                        <br />
-                    }
+            <div class="user-details">
+                <div class="input-box">
+                    <label asp-for="AccountDto.Firstname" class="details"></label>
+                    <input type="text" asp-for="AccountDto.Firstname" placeholder="Enter your Firstname" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Firstname" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Phone" class="details"></label>
+                    <input type="text" asp-for="AccountDto.Phone" placeholder="Enter your Phone" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Phone" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Fathername" class="details"></label>
+                    <input type="text" asp-for="AccountDto.Fathername" placeholder="Enter your Fathername" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Fathername" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Dob" class="details"></label>
+                    <input type="date" asp-for="AccountDto.Dob" placeholder="Enter your Birthdate" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Dob" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Lastname" class="details"></label>
+                    <input type="text" asp-for="AccountDto.Lastname" placeholder="Enter your Lastname" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Lastname" class="text-danger"></span>
+
+                </div>
+                <div class="input-box">
+                    <div class="gender-details">
+                        <span class="gender-title">Gender</span>
+                    </div>
+                    <select name="AccountDto.Gender" class="form-select">
+                        <option value="">Gender</option>
+                        @foreach (var item in Model.GenderOptions)
+                        {
+                            bool isSelected = item.Equals(Model.AccountDto.Gender);
+                            <option value="@item" selected="@isSelected">@item</option>
+                        }
+                    </select>
                     <span asp-validation-for="AccountDto.Gender" class="text-danger"></span>
                 </div>
-            </div>
-            <div>
-                <label asp-for="AccountDto.Dob" class="control-label">Date Of Birth</label>
-                <input class="form-control" asp-for="AccountDto.Dob" type="date" />
-                <span asp-validation-for="AccountDto.Dob" class="text-danger"></span>
-            </div>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Username" class="details"></label>
+                    <input type="text" asp-for="AccountDto.Username" placeholder="Enter your Username" class="form-control" required />
+                    <span asp-validation-for="AccountDto.Username" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <div class="gender-details">
+                        <span class="gender-title">Role</span>
+                    </div>
+                    <select name="AccountDto.RoleId" class="form-select">
+                        <option value="0">Role</option>
+                        @foreach (var item in Model.Roles)
+                        {
+                            bool isSelected = item.Id == Model.AccountDto.RoleId;
+                            <option value="@item.Id" selected="@isSelected">@item.RoleName</option>
+                            @*r.Id == account.RoleId ? true : false*@
+                        }
+                    </select>
+                    @*<select name="AccountDto.RoleId" asp-items="Model.Roles2" class="form-select">
+                        <option value="0">--Role--</option>
+                    </select>*@
+                    <span asp-validation-for="AccountDto.RoleId" class="text-danger"></span>
+                </div>
+                
+                <datalist>
 
-            <div>
-                <label asp-for="AccountDto.RoleId" class="control-label">Role</label>
-                <select name="AccountDto.RoleId">
-                    <option value="0">Select a Role</option>
-                    @foreach (var item in Model.Roles)
-                    {
-                        <option value="@item.Id">@item.RoleName</option>
-                    }
-                </select>
-                <span asp-validation-for="AccountDto.RoleId" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="AccountDto.Subcity" class="control-label">Address</label>
-                <select name="AccountDto.Subcity" onchange="GetWoreda()" id="Subcity">
-                    <option value="0">Subcity</option>
-                    @foreach (var item in Model.Subcities)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="AccountDto.Subcity" class="text-danger"></span>
-                <div id="_WoredaPartial">
+                </datalist>
+                <div class="input-box">
+                    <label asp-for="AccountDto.Password" class="details"></label>
+                    <input type="password" asp-for="AccountDto.Password" placeholder="Enter your Password" class="form-control" />
+                    <span asp-validation-for="AccountDto.Password" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <div class="gender-details">
+                        <span class="gender-title">Address</span>
+                    </div>
+                    <select name="AccountDto.SubcityId" onchange="GetWoreda()" class="form-select" id="Subcity" >
+                        <option value="0">Subcity</option>
+                        @foreach (var item in Model.Subcities)
+                        {
+                            bool isSelected = item.Id == Model.AccountDto.SubcityId;
+                            <option value="@item.Id" selected="@isSelected">@item.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AccountDto.SubcityId" class="text-danger"></span>
+                    <select name="AccountDto.Woreda" class="form-select" >
+                        <option value="0">Woreda</option>
+                        @for(int i=1;i<=50;i++)
+                        {
+                            bool isSelected = i == Model.AccountDto.Woreda;
+                            <option value="@i" selected="@isSelected">@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AccountDto.Woreda" class="text-danger"></span>
+                    <select name="AccountDto.Kebele" class="form-select">                        
+                        <option value="0">Kebele</option>
+                        @for (int i = 1; i <= 50; i++)
+                        {
+                            bool isSelected = i == Model.AccountDto.Kebele;
+                            <option value="@i" selected="@isSelected">@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AccountDto.Kebele" class="text-danger"></span>
                 </div>
             </div>
-
-
-            <div class="form-group" style="margin-top:10px;">
-                <input type="submit" value="Update" class="btn btn-primary" />
+            
+            <div class="button">
+                <input type="submit" value="Update">
             </div>
         </form>
     </div>
 </div>
-
 <div>
-    <a asp-page="../ManageAccounts">Back to List</a>
+    <a asp-page="./ManageAccounts">Go back</a>
 </div>
+
+<script type="text/javascript">
+    $("#gender").prop('selectedIndex', 2);
+</script>

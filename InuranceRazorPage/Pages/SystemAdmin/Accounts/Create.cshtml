@@ -40,7 +40,7 @@
                         <span class="gender-title">Gender</span>
                     </div>
                     <select name="AccountDto.Gender" class="form-select">
-                        <option value="0">Gender</option>
+                        <option value="">Gender</option>
                         @foreach (var item in Model.GenderOptions)
                         {
                             <option value="@item">@item</option>
@@ -75,14 +75,30 @@
                     <div class="gender-details">
                         <span class="gender-title">Address</span>
                     </div>
-                    <select name="AccountDto.Subcity" onchange="GetWoreda()" class="form-select" id="Subcity">
+                    <select name="AccountDto.SubcityId" onchange="GetWoreda()" class="form-select" id="Subcity">
                         <option value="0">Subcity</option>
                         @foreach (var item in Model.Subcities)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
                     </select>
-                    <span asp-validation-for="AccountDto.Subcity" class="text-danger"></span>
+                    <span asp-validation-for="AccountDto.SubcityId" class="text-danger"></span>
+                    <select name="AccountDto.Woreda" class="form-select">
+                        <option value="0">Woreda</option>
+                        @for (int i = 1; i <= 50; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AccountDto.Woreda" class="text-danger"></span>
+                    <select name="AccountDto.Kebele" class="form-select">
+                        <option value="0">Kebele</option>
+                        @for (int i = 1; i <= 50; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AccountDto.Kebele" class="text-danger"></span>
                  </div>
             </div>
             <div class="button">
@@ -92,24 +108,9 @@
     </div>
 </div>
 <div>
-    <a asp-page="../ManageAccounts">Go back</a>
+    <a asp-page="./ManageAccounts">Go back</a>
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
-
-<script type="text/javascript">
-        //function GetWoreda(){
-        //    $.get("/SystemAdmin/Accounts/Create", {
-        //        SubcityId: $("#Subcity").val()
-        //    }, function (data) {
-        //        $("#_WoredaPartial").html(data);
-        //    })
-        //}
-</script>
 
 
 

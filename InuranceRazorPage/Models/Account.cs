@@ -20,6 +20,7 @@ namespace InuranceRazorPage.Models
         public byte[] PasswordSalt { get; set; } = null!;
         //public string ImagePath { get; set; } = null!;
         [RegularExpression("(^[0-9]{4}[0-9]{6})", ErrorMessage = "Use Ethiopian phone format 09********")]//"[0-9]{4}[0-9]{6}"
+        [StringLength(25, MinimumLength = 6)]
         public string Phone { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public int Age { get; set; }

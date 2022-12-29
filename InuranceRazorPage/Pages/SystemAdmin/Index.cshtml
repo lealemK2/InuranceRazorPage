@@ -1,18 +1,18 @@
 ﻿@page
 @model InuranceRazorPage.Pages.SystemAdmin.IndexModel
 @{
-    Layout = "_admin";
+    Layout = "_Dashboard";
 }
 
 
 
 <!-- top navigation bar -->
-<partial name="_DashboardNav"></partial>
+<partial name="_DashboardNavPartial"></partial>
 <!-- top navigation bar -->
 <!-- offcanvas -->
-<partial name="_SystemAdmin"></partial>
+<partial name="_SystemAdminPartial"></partial>
 <!-- offcanvas -->
 <main class="mt-5 pt-3">
-<partial name="_AdminMain"></partial>
+<partial name="_DashboardMainPartial"></partial>
 </main>
 
