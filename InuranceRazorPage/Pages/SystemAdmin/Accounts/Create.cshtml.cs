@@ -13,26 +13,26 @@ using System.Data;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using  InuranceRazorPage.Data;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
     [Authorize(Roles = "SystemAdmin")]
     public class CreateModel : PageModel
     {  
-        private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
+        private readonly InuranceRazorPageContext _context;
 
-        public CreateModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
+        public CreateModel(InuranceRazorPageContext context)
         {
             _context = context;
         }
-
+        
 
         [BindProperty,Required]
         public AccountDto AccountDto { get; set; }
 
         public string[] GenderOptions = new[] { "Male", "Female"};
 
-        //[DisplayName("Subjects")]
         [BindProperty]
         public List<Role> Roles { get; set; } = default!;
         [BindProperty]
@@ -104,7 +104,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             Address address = new Address() { 
                 SubcityId = AccountDto.SubcityId,
                 Woreda = AccountDto.Woreda,
-                Kebele = AccountDto.Kebele,
             };
             CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var account = new Account
@@ -122,7 +121,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 RoleId =AccountDto.RoleId,
                 Createdon = DateTime.Now
             };
-            _context.Addresses.Add(address);
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 

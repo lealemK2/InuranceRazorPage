@@ -63,7 +63,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             AccountDto.RoleId=account.RoleId;
             AccountDto.SubcityId = account.Address == null ? 0: account.Address.SubcityId;
             AccountDto.Woreda= account.Address == null ? 0 : account.Address.Woreda;
-            AccountDto.Kebele = account.Address == null ? 0 : account.Address.Kebele;
 
             return Page();
         }
@@ -103,14 +102,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 ModelState.AddModelError("AccountDto.Woreda", "Please select a Woreda");
             }
-            //if (AccountDto.Woreda == 0)
-            //{
-            //    ModelState.AddModelError("AccountDto.Woreda", "Please select a Woreda");
-            //}
-            //if (AccountDto.Kebele == 0)
-            //{
-            //    ModelState.AddModelError("AccountDto.Woreda", "Please select a Kebele");
-            //}
 
             if (string.IsNullOrEmpty(AccountDto.Password))//not the same
             {
@@ -137,7 +128,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == account.AddressId);
             address.SubcityId = AccountDto.SubcityId;
             address.Woreda = AccountDto.Woreda;
-            address.Kebele = AccountDto.Kebele;
 
 
             if (!string.IsNullOrEmpty(AccountDto.Password))//not the same

@@ -1,4 +1,16 @@
 ﻿@page
 @model InuranceRazorPage.Pages.Clerk.IndexModel
 @{
+    Layout = "_Dashboard";
 }
+
+
+<!-- top navigation bar -->
+<partial name="_DashboardNavPartial"></partial>
+<!-- top navigation bar -->
+<!-- offcanvas -->
+<partial name="_ClerkPartial"></partial>
+<!-- offcanvas -->
+<main class="mt-5 pt-3">
+    <partial name="_DashboardMainPartial"></partial>
+</main>

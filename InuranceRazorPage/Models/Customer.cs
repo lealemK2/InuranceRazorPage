@@ -13,16 +13,17 @@ namespace InuranceRazorPage.Models
         public string Phone { get; set; } = null!;
         //public string ImagePath { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public int AddressId { get; set; }
         public DateTime Dob { get; set; }
         public int nthMember { get; set; }
+        public string Relation { get; set; }= null!;
         public bool IsAdditional { get; set; }
         public string LoginCbhi { get; set; } = null!;
         public DateTime Createdon { get; set; }
         //navigations
+        public int AddressId { get; set; }
+        public Address Address { get; set; } = null!;
         public int CbhiId { get; set; }
         public Cbhi Cbhi { get; set; } = null!;
-        //public Address Address { get; set; } = null!;
 
     }
 }

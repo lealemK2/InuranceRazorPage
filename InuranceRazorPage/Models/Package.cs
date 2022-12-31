@@ -10,5 +10,7 @@ namespace InuranceRazorPage.Models
         public decimal Price { get; set; }
         public int MaxNumberOfAdult { get; set; }
         public decimal AdditionalFeePerAdult { get; set; }
+        public bool CanAddMember { get; set; }
+
     }
 }
