@@ -3,6 +3,7 @@ using System;
 using InuranceRazorPage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InuranceRazorPage.Migrations
 {
     [DbContext(typeof(InuranceRazorPageContext))]
-    partial class InuranceRazorPageContextModelSnapshot : ModelSnapshot
+    [Migration("20230101151207_jan105")]
+    partial class jan105
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,17 +148,14 @@ namespace InuranceRazorPage.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("NthTracker")
+                    b.Property<int>("PackageId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PackageId")
+                    b.Property<int>("PayableMembers")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("TotalAdults")
-                        .HasColumnType("integer");
 
                     b.Property<int>("TotalMembers")
                         .HasColumnType("integer");
@@ -220,6 +220,9 @@ namespace InuranceRazorPage.Migrations
                     b.Property<string>("Relation")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("nthMember")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

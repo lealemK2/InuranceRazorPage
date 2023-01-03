@@ -1,60 +1,50 @@
+using InuranceRazorPage.Data;
+using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
+using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
-    [Authorize(Roles = "SystemAdmin")]
 
     public class DeleteModel : PageModel
-    {
-        private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
+        {
+        private readonly InuranceRazorPageContext _context;
 
-        public DeleteModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
+        public DeleteModel(InuranceRazorPageContext context)
         {
             _context = context;
         }
         [BindProperty]
-        public Account Account { get; set; }
+        public Account Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Accounts == null)
+            if (_context.Accounts != null)
             {
-                return NotFound();
-            }
-
-            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (account == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Account = account;
+                Account = await _context.Accounts.Include(a => a.role).FirstOrDefaultAsync(a => a.Id == id);
             }
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Accounts == null)
+            if (_context.Accounts != null)
             {
-                return NotFound();
-            }
-            var account = await _context.Accounts.FindAsync(id);
-
-            if (account != null)
-            {
-                Account = account;
-                _context.Accounts.Remove(Account);
-                await _context.SaveChangesAsync();
+                Account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
+                if(Account != null)
+                {
+                    _context.Accounts.Remove(Account);
+                }
             }
 
             return RedirectToPage("./ManageAccounts");
         }
+
+
     }
+
 }

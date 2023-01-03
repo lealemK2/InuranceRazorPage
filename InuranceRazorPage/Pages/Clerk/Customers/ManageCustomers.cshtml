@@ -22,6 +22,82 @@
             <button type="button" class="btn btn-primary">Register Customer</button>
         </a>
 
+        <div class="row" style="margin-top : 20px">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="bi bi-table me-2"></i></span> Customers Table
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <table id="example"
+                                   class="table table-striped data-table"
+                                   style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Gender</th>
+                                        <th>PackageType</th>
+                                        <th>Relation</th>
+                                        <th>Cbhi Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Customers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Firstname)
+                                                @Html.DisplayFor(modelItem => item.Fathername)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Gender)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cbhi.Package.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Relation)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LoginCbhi)
+                                            </td>
+
+                                            <td>
+                                                @if(item.Cbhi.PackageId==2){
+                                                    <a asp-page="./CreateOther" asp-route-id="@item.Id">Add Member</a> 
+                                                }
+                                                | <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                                <a asp-page="./Delete" asp-route-id="@item.Id" >Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Gender</th>
+                                        <th>PackageType</th>
+                                        <th>Relation</th>
+                                        <th>Cbhi Id</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

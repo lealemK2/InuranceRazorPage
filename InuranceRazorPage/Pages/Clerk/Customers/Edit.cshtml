@@ -1,11 +1,11 @@
 ﻿@page
-@model InuranceRazorPage.Pages.Clerk.Customers.CreateModel
+@model InuranceRazorPage.Pages.Clerk.Customers.EditModel
 @{
     Layout = "_form";
 }
 
 <div class="container">
-    <div class="title">Register Customer</div>
+    <div class="title">Update Customer</div>
     <div class="content">
         <form method="post">
             <div class="user-details">
@@ -42,7 +42,8 @@
                         <option value="">Gender</option>
                         @foreach (var item in Model.GenderOptions)
                         {
-                            <option value="@item">@item</option>
+                            bool isSelected = item.Equals(Model.CustomerDto.Gender);
+                            <option value="@item" selected="@isSelected">@item</option>
                         }
                     </select>
                     <span asp-validation-for="CustomerDto.Gender" class="text-danger"></span>
@@ -52,15 +53,17 @@
                     <div class="gender-details">
                         <span class="gender-title">Package</span>
                     </div>
-                    <select name="CustomerDto.PackageId" class="form-select">
+                    <select name="CustomerDto.PackageId" class="form-select" disabled="true">
                         <option value="0">Package</option>
                         @foreach (var item in Model.Packages)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            bool isSelected = item.Id == Model.CustomerDto.PackageId;
+                            <option value="@item.Id" selected="@isSelected">@item.Name</option>
                         }
                     </select>
                     <span asp-validation-for="CustomerDto.PackageId" class="text-danger"></span>
                 </div>
+
 
                 <div class="input-box">
                     <div class="gender-details">
@@ -70,7 +73,8 @@
                         <option value="0">Subcity</option>
                         @foreach (var item in Model.Subcities)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            bool isSelected = item.Id == Model.CustomerDto.SubcityId;
+                            <option value="@item.Id" selected="@isSelected">@item.Name</option>
                         }
                     </select>
                     <span asp-validation-for="CustomerDto.SubcityId" class="text-danger"></span>
@@ -88,23 +92,27 @@
                     </div>
                 </div>
 
-                
                 <div class="input-box">
                     <div class="gender-details">
                         <span class="gender-title">Relation</span>
                     </div>
                     <select name="CustomerDto.Relation" class="form-select">
                         <option value="">Relation</option>
-                        <option value="HouseHold">HouseHold</option>
+                        @foreach (var item in Model.RelationOptions)
+                        {
+                            bool isSelected = item.Equals(Model.CustomerDto.Relation);
+                            <option value="@item" selected="@isSelected">@item</option>
+                        }
                     </select>
-                    <span asp-validation-for="CustomerDto.Relation" class="text-danger"></span>
+                    <span asp-validation-for="CustomerDto.Gender" class="text-danger"></span>
                 </div>
 
+
+
+
             </div>
-
-
             <div class="button">
-                <input type="submit" value="Register">
+                <input type="submit" value="Update">
             </div>
         </form>
     </div>
@@ -112,4 +120,3 @@
 <div>
     <a asp-page="./ManageCustomers">Go back</a>
 </div>
-

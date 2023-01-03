@@ -14,9 +14,9 @@ namespace InuranceRazorPage.Models
         //public string ImagePath { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public DateTime Dob { get; set; }
-        public int nthMember { get; set; }
         public string Relation { get; set; }= null!;
         public bool IsAdditional { get; set; }
+        public bool IsDisabled { get; set; }
         public string LoginCbhi { get; set; } = null!;
         public DateTime Createdon { get; set; }
         //navigations

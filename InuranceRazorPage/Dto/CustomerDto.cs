@@ -22,6 +22,7 @@ namespace InuranceRazorPage.Dto
         public int? Woreda { get; set; }
         public int? HouseNumber { get; set; }
         public int PackageId { get; set; }
+        public bool IsDisabled { get; set; }
 
     }
 }

@@ -74,6 +74,10 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             {
                 ModelState.AddModelError("CustomerDto.Gender", "The Gender field is required");
             }
+            if (CustomerDto.Relation == null)
+            {
+                ModelState.AddModelError("CustomerDto.Relation", "The Relation field is required");
+            }
             if (CustomerDto.PackageId == 0)
             {
                 ModelState.AddModelError("CustomerDto.PackageId", "Please select a Package");
@@ -97,12 +101,21 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             {
                 ModelState.AddModelError("CustomerDto.HouseNumber", "This Address is already taken!");
             }
-
+            ModelState.Remove("CustomerDto.IsDisabled");
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            Cbhi cbhi = new Cbhi()
+            {
+                BaseCbhi = generateBaseCbhi(),
+                TotalAdults = 1,
+                IsPaid = false,
+                PackageId = CustomerDto.PackageId,
+                TotalMembers = 1,
+                NthTracker=1
+            };
             var customer = new Customer
             {
                 Firstname = CustomerDto.Firstname,
@@ -111,8 +124,13 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
                 Phone = CustomerDto.Phone,
                 Gender = CustomerDto.Gender,
                 Dob = CustomerDto.Dob.Date,
+                Relation = CustomerDto.Relation,
                 Address = address,
-                Createdon = DateTime.Now
+                Createdon = DateTime.Now,
+                Cbhi = cbhi,
+                IsAdditional = false,
+                IsDisabled = false,
+                LoginCbhi = String.Concat(cbhi.BaseCbhi,"-",cbhi.NthTracker)//- 1 represents its the first memmber
             };
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
@@ -146,6 +164,20 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             {
                 return false;
             }
+        }
+
+        public string generateBaseCbhi()
+        {
+            string baseCbhi;
+            baseCbhi = String.Concat(CustomerDto.SubcityId.ToString(), "/",
+                    CustomerDto.Woreda.ToString(), "",
+                    CustomerDto.PackageId.ToString(), "-",
+                    DateTime.Now.Year.ToString(), 
+                    DateTime.Now.Month.ToString(),
+                    DateTime.Now.Day.ToString(),
+                    DateTime.Now.Hour.ToString(),
+                    DateTime.Now.Second.ToString());
+            return baseCbhi;
         }
 
 

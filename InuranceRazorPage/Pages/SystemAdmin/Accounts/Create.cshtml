@@ -84,14 +84,18 @@
                         }
                     </select>
                     <span asp-validation-for="AccountDto.SubcityId" class="text-danger"></span>
-                    <select name="AccountDto.Woreda" class="form-select">
-                        <option value="0">Woreda</option>
-                        @for (int i = 1; i <= 50; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                    <span asp-validation-for="AccountDto.Woreda" class="text-danger"></span>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div class="input-box " style="width: 50%;">
+                            <label asp-for="AccountDto.Woreda" class="details"></label>
+                            <input type="text" asp-for="AccountDto.Woreda" placeholder="Woreda" class="form-control" required />
+                            <span asp-validation-for="AccountDto.Woreda" class="text-danger"></span>
+                        </div>
+                        <div class="input-box " style="width: 50%; ">
+                            <label asp-for="AccountDto.HouseNumber" class="details"></label>
+                            <input type="text" asp-for="AccountDto.HouseNumber" placeholder="House Number" class="form-control" required />
+                            <span asp-validation-for="AccountDto.HouseNumber" class="text-danger"></span>
+                        </div>
+                    </div>
                  </div>
             </div>
             <div class="button">

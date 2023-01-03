@@ -55,6 +55,8 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 Subcities = new List<Subcity>();
             }
+            AccountDto = new AccountDto();
+            AccountDto.Dob = DateTime.Now.AddYears(-18);
         }
 
 
@@ -104,6 +106,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             Address address = new Address() { 
                 SubcityId = AccountDto.SubcityId,
                 Woreda = AccountDto.Woreda,
+                HouseNumber = AccountDto.HouseNumber,
             };
             CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var account = new Account

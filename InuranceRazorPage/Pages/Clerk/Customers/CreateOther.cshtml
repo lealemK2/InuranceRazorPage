@@ -1,5 +1,5 @@
 ﻿@page
-@model InuranceRazorPage.Pages.Clerk.Customers.CreateModel
+@model InuranceRazorPage.Pages.Clerk.Customers.CreateOtherModel
 @{
     Layout = "_form";
 }
@@ -48,47 +48,9 @@
                     <span asp-validation-for="CustomerDto.Gender" class="text-danger"></span>
                 </div>
 
-                <div class="input-box">
-                    <div class="gender-details">
-                        <span class="gender-title">Package</span>
-                    </div>
-                    <select name="CustomerDto.PackageId" class="form-select">
-                        <option value="0">Package</option>
-                        @foreach (var item in Model.Packages)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="CustomerDto.PackageId" class="text-danger"></span>
-                </div>
 
-                <div class="input-box">
-                    <div class="gender-details">
-                        <span class="gender-title">Address</span>
-                    </div>
-                    <select name="CustomerDto.SubcityId" onchange="GetWoreda()" class="form-select" id="Subcity">
-                        <option value="0">Subcity</option>
-                        @foreach (var item in Model.Subcities)
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="CustomerDto.SubcityId" class="text-danger"></span>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="input-box " style="width: 50%;">
-                            <label asp-for="CustomerDto.Woreda" class="details"></label>
-                            <input type="text" asp-for="CustomerDto.Woreda" placeholder="Woreda" class="form-control" required />
-                            <span asp-validation-for="CustomerDto.Woreda" class="text-danger"></span>
-                        </div>
-                        <div class="input-box " style="width: 50%; ">
-                            <label asp-for="CustomerDto.HouseNumber" class="details"></label>
-                            <input type="text" asp-for="CustomerDto.HouseNumber" placeholder="House Number" class="form-control" required />
-                            <span asp-validation-for="CustomerDto.HouseNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
 
-                
+
                 <div class="input-box">
                     <div class="gender-details">
                         <span class="gender-title">Relation</span>
@@ -96,8 +58,23 @@
                     <select name="CustomerDto.Relation" class="form-select">
                         <option value="">Relation</option>
                         <option value="HouseHold">HouseHold</option>
+                        <option value="HouseHold_Spouse">HouseHold_Spouse</option>
+                        <option value="Son">Son</option>
+                        <option value="Daughter">Daughter</option>
+                        <option value="Other">Other</option>
                     </select>
                     <span asp-validation-for="CustomerDto.Relation" class="text-danger"></span>
+                </div>
+                <div class="input-box">
+                    <div class="gender-details">
+                        <span class="gender-title">Has Disablity</span>
+                    </div>
+                    <select name="CustomerDto.IsDisabled" class="form-select">
+                        <option value="">Is Disabled?</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="CustomerDto.IsDisabled" class="text-danger"></span>
                 </div>
 
             </div>

@@ -26,6 +26,7 @@ namespace InuranceRazorPage.Dto
         public int SubcityId { get; set; }
         [Range(1,30, ErrorMessage="Woreda must be in range from 1 to 30")]
         public int? Woreda { get; set; }
+        public int? HouseNumber { get; set; }
 
     }
 }

@@ -1,3 +1,4 @@
+using InuranceRazorPage.Data;
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -15,9 +16,9 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
     [Authorize(Roles = "SystemAdmin")]
     public class EditModel : PageModel
     {
-        private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
+        private readonly InuranceRazorPageContext _context;
 
-        public EditModel(InuranceRazorPage.Data.InuranceRazorPageContext context)
+        public EditModel(InuranceRazorPageContext context)
         {
             _context = context;
         }
@@ -28,9 +29,6 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         public string[] GenderOptions = new[] { "Male", "Female" };
         public IList<Role> Roles { get; set; } = default!;
         public IList<Subcity> Subcities { get; set; } = default!;
-        public Account account { get; set; } = default!;
-        public IEnumerable<SelectListItem> Genders;
-        //public IEnumerable<SelectListItem> Roles2;
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -63,6 +61,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             AccountDto.RoleId=account.RoleId;
             AccountDto.SubcityId = account.Address == null ? 0: account.Address.SubcityId;
             AccountDto.Woreda= account.Address == null ? 0 : account.Address.Woreda;
+            AccountDto.HouseNumber= account.Address == null ? 0 : account.Address.HouseNumber;
 
             return Page();
         }
@@ -128,6 +127,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == account.AddressId);
             address.SubcityId = AccountDto.SubcityId;
             address.Woreda = AccountDto.Woreda;
+            address.HouseNumber = AccountDto.HouseNumber;
 
 
             if (!string.IsNullOrEmpty(AccountDto.Password))//not the same
