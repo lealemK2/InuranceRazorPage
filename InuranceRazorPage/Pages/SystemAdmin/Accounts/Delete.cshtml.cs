@@ -38,6 +38,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 if(Account != null)
                 {
                     _context.Accounts.Remove(Account);
+                    await _context.SaveChangesAsync();
                 }
             }
 

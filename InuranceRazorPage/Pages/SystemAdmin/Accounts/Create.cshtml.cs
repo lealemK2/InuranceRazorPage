@@ -90,7 +90,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             }
             if (AccountDto.SubcityId==0)
             {
-                ModelState.AddModelError("AccountDto.Subcity", "Please select a Subcity");
+                ModelState.AddModelError("AccountDto.SubcityId", "Please select a Subcity");
             }
 
             if (UsernameExists(AccountDto.Username))

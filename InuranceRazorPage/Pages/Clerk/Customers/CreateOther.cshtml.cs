@@ -1,17 +1,19 @@
 using InuranceRazorPage.Data;
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Security.Principal;
 
 namespace InuranceRazorPage.Pages.Clerk.Customers
 {
-
-public class CreateOtherModel : PageModel
-{
+    [Authorize(Roles = "Clerk")]
+    public class CreateOtherModel : PageModel
+    {
         private readonly InuranceRazorPageContext _context;
 
         public CreateOtherModel(InuranceRazorPageContext context)
@@ -91,7 +93,7 @@ public class CreateOtherModel : PageModel
             {
                 if (CustomerDto.Dob.Year > 18)
                 {
-                    prevCustomer.Cbhi.TotalAdults += 1;
+                   prevCustomer.Cbhi.PayableMembers += 1;
                 }
             }            
 
@@ -113,20 +115,12 @@ public class CreateOtherModel : PageModel
             };
             customer.LoginCbhi = String.Concat(prevCustomer.Cbhi.BaseCbhi, "-", prevCustomer.Cbhi.NthTracker);
             customer.IsDisabled = CustomerDto.IsDisabled;
-            if (!CustomerDto.IsDisabled || (CustomerDto.Dob.Year>18))
+            if (!CustomerDto.IsDisabled || (CustomerDto.Dob.Year > 18))
             {
-                if (prevCustomer.Cbhi.TotalAdults > prevCustomer.Cbhi.Package.MaxNumberOfAdult)
+                if (prevCustomer.Cbhi.PayableMembers > prevCustomer.Cbhi.Package.MaxNumberOfAdult)
                 {
-                    customer.IsAdditional = true;
+                    prevCustomer.Cbhi.AdditionalMembers += 1;
                 }
-                else
-                {
-                    customer.IsAdditional = false;
-                }
-            }
-            else
-            {
-                customer.IsAdditional = false;
             }
 
             _context.Cbhis.Update(prevCustomer.Cbhi);

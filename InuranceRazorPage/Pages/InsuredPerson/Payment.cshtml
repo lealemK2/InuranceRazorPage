@@ -1,0 +1,94 @@
+﻿@page
+@model InuranceRazorPage.Pages.InsuredPerson.PaymentModel
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="h-100 h-custom" >
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+                    <div class="card-body p-5">
+
+                        <p class="lead fw-bold mb-5" style="color: #f37a27;">Thanks for using our service</p>
+
+                        <div class="text-muted mb-1 ">
+                            @Model.Customer.Cbhi.Package.Name
+                            Package is 
+                            @Model.Customer.Cbhi.Package.Price $ yearly upto
+                            @Model.Customer.Cbhi.Package.MaxNumberOfAdult members.
+                        </div>
+                        <div class="text-muted mb-1">
+                            @if(Model.Customer.Cbhi.Package.CanAddMember){
+                                <div> There will be @Model.Customer.Cbhi.Package.AdditionalFeePerAdult $
+                                        additional fee per each member if it exceeds the limit.
+                                </div>
+                            }
+                        </div>
+                        <div></div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <p class="small text-muted mb-1">Date</p>
+                                <p>@Model.D.Day/@Model.D.Month/@Model.D.Year</p>
+                            </div>
+                            <div class="col mb-3">
+                                <p class="small text-muted mb-1">Payer</p>
+                                <p>@Model.Customer.Firstname @Model.Customer.Fathername</p>
+                            </div>
+                        </div>
+
+
+
+                        <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                            <div class="row">
+                                Total members : @Model.Customer.Cbhi.TotalMembers
+                            </div>
+                            <div class="row">
+                                Payable Members : @Model.Customer.Cbhi.PayableMembers
+                            </div>
+                            <hr class="dropdown-divider bg-light" />
+                            <div class="row">
+                                <div class="col-md-8 col-lg-9">
+                                    <p>
+                                        @(Model.Customer.Cbhi.PayableMembers <= Model.Customer.Cbhi.Package.MaxNumberOfAdult ? Model.Customer.Cbhi.PayableMembers : Model.Customer.Cbhi.Package.MaxNumberOfAdult)
+                                        Package Members</p>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <p>$ @Model.Customer.Cbhi.Package.Price  </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-lg-9">
+                                    <p class="mb-0">@Model.Customer.Cbhi.AdditionalMembers Additional Members</p>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <p class="mb-0"> $ @Model.Customer.Cbhi.Package.AdditionalFeePerAdult * @Model.Customer.Cbhi.AdditionalMembers </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                                <p class="lead fw-bold mb-0" style="color: #f37a27;">$Total @Model.Total</p>
+                            </div>
+                        </div>
+
+                        <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">QR Code</p>
+
+                        <i class="bi bi-qr-code"></i>
+
+                        <form method="post">
+                            <div>
+                                <input class="btn btn-success button5" type="submit" value="Pay">
+                            </div>
+                        </form>
+                        <p class="mt-4 pt-2 mb-0"> <a asp-page="./Index" style="color: #f37a27;">go back</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

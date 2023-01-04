@@ -1,11 +1,14 @@
 using InuranceRazorPage.Data;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace InuranceRazorPage.Pages.Clerk.Customers
 {
+    [Authorize(Roles = "Clerk")]
     public class ManageCustomersModel : PageModel
     {
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;

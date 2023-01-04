@@ -23,7 +23,6 @@ namespace InuranceRazorPage.Models
         [StringLength(25, MinimumLength = 6)]
         public string Phone { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public int Age { get; set; }
         public bool IsActive { get; set; } = false;
         public DateTime Dob { get; set; }
         public DateTime Createdon { get; set; }

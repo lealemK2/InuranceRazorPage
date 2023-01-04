@@ -33,9 +33,6 @@ namespace InuranceRazorPage.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("Createdon")
                         .HasColumnType("timestamp without time zone");
 
@@ -135,6 +132,9 @@ namespace InuranceRazorPage.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdditionalMembers")
+                        .HasColumnType("integer");
+
                     b.Property<string>("BaseCbhi")
                         .IsRequired()
                         .HasColumnType("text");
@@ -151,11 +151,11 @@ namespace InuranceRazorPage.Migrations
                     b.Property<int>("PackageId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("PayableMembers")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("TotalAdults")
-                        .HasColumnType("integer");
 
                     b.Property<int>("TotalMembers")
                         .HasColumnType("integer");
@@ -199,7 +199,7 @@ namespace InuranceRazorPage.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsAdditional")
+                    b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDisabled")
@@ -296,18 +296,42 @@ namespace InuranceRazorPage.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("AdditionalFeePerMember")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("AdditionalMembers")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
                     b.Property<int>("CbhiId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("LimitOfMembersPerPackage")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PackageFee")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("PackageName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PayableMembers")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CbhiId");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Payments");
                 });
@@ -424,7 +448,15 @@ namespace InuranceRazorPage.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("InuranceRazorPage.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cbhi");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("InuranceRazorPage.Models.Address", b =>

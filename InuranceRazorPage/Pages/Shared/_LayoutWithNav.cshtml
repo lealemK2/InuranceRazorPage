@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/InuranceRazorPage.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="~/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+
+
 </head>
 <body>
     <header>
@@ -21,27 +25,27 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/index">Contact Us</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Others/ContactUs">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/index">About us</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Others/AboutUs">About us</a>
                         </li>
                         @if (User.IsInRole("SystemAdmin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/SystemAdmin/index">DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/SystemAdmin/index">Admin DashBoard</a>
                             </li>
                         }
                         @if (User.IsInRole("Clerk"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/index">DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/index">Clerk DashBoard</a>
                             </li>
                         }
                         @if (User.IsInRole("Manager"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manager/index">DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manager/index">Manager DashBoard</a>
                             </li>
                         }
                     </ul>
@@ -63,7 +67,7 @@
                             <button type="button" class="btn btn-warning me-2">
                                 Logout
                             </button>
-                        </a>
+                        </a> 
                     </div>
                 } 
                 

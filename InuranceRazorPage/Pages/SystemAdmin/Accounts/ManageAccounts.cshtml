@@ -15,24 +15,26 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4>Manage Accounts</h4>
+                <h4>Manage Users</h4>
             </div>
         </div>
         <a asp-page="./Create">
-            <button type="button" class="btn btn-primary">Create User</button>
+            <button type="button" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create User
+            </button>
         </a>
 
         <div class="row" style="margin-top : 20px">
             <div class="col-md-12 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <span><i class="bi bi-table me-2"></i></span> Accounts Table
+                        <span><i class="bi bi-table me-2"></i></span> Users Table
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
 
                             <table id="example"
-                                   class="table table-striped data-table"
+                                   class="table table-striped data-table" 
                                    style="width: 100%">
                                 <thead>
                                     <tr>
@@ -42,6 +44,7 @@
                                         <th>Gender</th>
                                         <th>Role</th>
                                         <th>BirthDate</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,11 +73,10 @@
                                                 @Html.DisplayFor(modelItem => item.Dob.Day)/
                                                 @Html.DisplayFor(modelItem => item.Dob.Year)
                                             </td>
-
                                             <td>
-                                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-warning "><i class="bi bi-ticket-detailed"></i></a>
+                                                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="bi bi-archive"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -87,6 +89,7 @@
                                         <th>Gender</th>
                                         <th>Role</th>
                                         <th>BirthDate</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>

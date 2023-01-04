@@ -1,13 +1,16 @@
 using InuranceRazorPage.Data;
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace InuranceRazorPage.Pages.Clerk.Customers
 {
+    [Authorize(Roles = "Clerk")]
     public class CreateModel : PageModel
     {
         private readonly InuranceRazorPageContext _context;
@@ -84,7 +87,7 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             }
             if (CustomerDto.SubcityId == 0)
             {
-                ModelState.AddModelError("CustomerDto.Subcity", "Please select a Subcity");
+                ModelState.AddModelError("CustomerDto.SubcityId", "Please select a Subcity");
             }
             if (PhoneExists(CustomerDto.Phone))
             {
@@ -110,7 +113,7 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             Cbhi cbhi = new Cbhi()
             {
                 BaseCbhi = generateBaseCbhi(),
-                TotalAdults = 1,
+                PayableMembers = 1,
                 IsPaid = false,
                 PackageId = CustomerDto.PackageId,
                 TotalMembers = 1,
@@ -128,7 +131,6 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
                 Address = address,
                 Createdon = DateTime.Now,
                 Cbhi = cbhi,
-                IsAdditional = false,
                 IsDisabled = false,
                 LoginCbhi = String.Concat(cbhi.BaseCbhi,"-",cbhi.NthTracker)//- 1 represents its the first memmber
             };

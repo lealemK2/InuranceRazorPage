@@ -9,14 +9,14 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/Login";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
         options.AccessDeniedPath = "/Denied";
     });
 builder.Services.AddDbContext<InuranceRazorPageContext>(options =>
@@ -58,3 +58,4 @@ app.UseCookiePolicy(cookiePolicyOptions);
 app.MapRazorPages();
 
 app.Run();
+

@@ -1,15 +1,18 @@
 using InuranceRazorPage.Data;
 using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Principal;
 using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 
 namespace InuranceRazorPage.Pages.Clerk.Customers
 {
+    [Authorize(Roles = "Clerk")]
     public class EditModel : PageModel
     {
         private readonly InuranceRazorPageContext _context;
@@ -25,7 +28,7 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
         public List<Subcity> Subcities { get; set; } = default!;
         public List<Package> Packages { get; set; } = default!;
         public string[] GenderOptions = new[] { "Male", "Female" };
-        public string[] RelationOptions = new[] { "HouseHold", "HouseHold_Spouse", "Son", "Daughter", " Other " };
+        public string[] RelationOptions = new[] { "HouseHold", "Spouse", "Son", "Daughter", " Other " };
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -108,7 +111,7 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             }
             if (CustomerDto.SubcityId == 0)
             {
-                ModelState.AddModelError("CustomerDto.Subcity", "Please select a Subcity");
+                ModelState.AddModelError("CustomerDto.SubcityId", "Please select a Subcity");
             }
             if (PhoneExists(CustomerDto.Phone))
             {

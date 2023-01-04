@@ -25,17 +25,20 @@ namespace InuranceRazorPage.Pages
         }
         public async Task<IActionResult> OnPostAsync( )
         {
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
             Customer customer = await _context.Customers.FirstOrDefaultAsync(a => a.LoginCbhi.Equals(CBHI));
-            if(customer == null)
+            if (customer == null)
             {
                 ModelState.AddModelError("CBHI", "CBHI ID does not exist");
                 return Page();
             }
+            var cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddMinutes(30);
+            cookieOptions.Path = "/InsuredPerson";
+            Response.Cookies.Append("loginCbhi", CBHI, cookieOptions);
 
             return RedirectToPage("./InsuredPerson/Index");
         }

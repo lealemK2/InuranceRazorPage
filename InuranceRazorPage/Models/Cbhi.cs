@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public String BaseCbhi { get; set; }
-        public int TotalAdults { get; set; }
         public int TotalMembers { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -13,5 +12,7 @@
         public int PackageId { get; set; }
         public Package Package { get; set; }
         public int NthTracker { get; set; }
+        public int PayableMembers { get; set; }
+        public int AdditionalMembers { get; set; }
     }
 }
