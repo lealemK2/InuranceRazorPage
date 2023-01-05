@@ -107,12 +107,10 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 ModelState.Remove("AccountDto.Password");
             }
 
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             var account = new Account();
             account=await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
             account.Firstname = AccountDto.Firstname;
@@ -133,7 +131,8 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             if (!string.IsNullOrEmpty(AccountDto.Password))//not the same
             {
                 
-                CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, 
+                                            out byte[] passwordSalt);
                 account.PasswordHash= passwordHash;
                 account.PasswordSalt= passwordSalt;
             }

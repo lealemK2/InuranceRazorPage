@@ -36,7 +36,8 @@ namespace InuranceRazorPage.Pages
                 return Page();
             }
 
-            var account = await _context.Accounts.Include(a=>a.role).FirstOrDefaultAsync(a => a.Username.ToLower() == LoginDto.Username.ToLower());
+            var account = await _context.Accounts.Include(a=>a.role).
+                FirstOrDefaultAsync(a => a.Username.ToLower() == LoginDto.Username.ToLower());
             if (account == null)
             {
                 ModelState.AddModelError("LoginDto.Username", "Username Does not exist!");
@@ -49,7 +50,6 @@ namespace InuranceRazorPage.Pages
 
                 return Page();
             }
-            //
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, LoginDto.Username),
@@ -57,42 +57,19 @@ namespace InuranceRazorPage.Pages
                     new Claim(ClaimTypes.Role, account.role.RoleName)
                 };
 
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
-            {
-                //AllowRefresh = <bool>,
-                // Refreshing the authentication session should be allowed.
-
-                //ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                // The time at which the authentication ticket expires. A 
-                // value set here overrides the ExpireTimeSpan option of 
-                // CookieAuthenticationOptions set with AddCookie.
-
-                //IsPersistent = true,
-                // Whether the authentication session is persisted across 
-                // multiple requests. When used with cookies, controls
-                // whether the cookie's lifetime is absolute (matching the
-                // lifetime of the authentication ticket) or session-based.
-
-                //IssuedUtc = <DateTimeOffset>,
-                // The time at which the authentication ticket was issued.
-
-                //RedirectUri = <string>
-                // The full path or absolute URI to be used as an http 
-                // redirect response value.
-            };
-
+            var identity = new ClaimsIdentity(claims, 
+                CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties{     };
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity),
                     authProperties);
 
-            //return RedirectToPage("Index");
             return LocalRedirect(returnUrl);
         }
 
-        private static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        private static bool VerifyPasswordHash(string password, byte[] passwordHash,
+            byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));

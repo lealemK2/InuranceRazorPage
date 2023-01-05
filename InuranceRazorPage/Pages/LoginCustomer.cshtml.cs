@@ -29,7 +29,8 @@ namespace InuranceRazorPage.Pages
             {
                 return Page();
             }
-            Customer customer = await _context.Customers.FirstOrDefaultAsync(a => a.LoginCbhi.Equals(CBHI));
+            Customer customer = await _context.Customers.
+                FirstOrDefaultAsync(a => a.LoginCbhi.Equals(CBHI));
             if (customer == null)
             {
                 ModelState.AddModelError("CBHI", "CBHI ID does not exist");

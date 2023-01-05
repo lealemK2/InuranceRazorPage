@@ -153,7 +153,6 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             customer.Phone = CustomerDto.Phone;
             customer.Dob = CustomerDto.Dob;
             customer.Gender = CustomerDto.Gender;
-            //customer.Cbhi.PackageId = CustomerDto.PackageId;//if new package is formed
             customer.Relation = CustomerDto.Relation;
 
             var address4 = await _context.Addresses.FirstOrDefaultAsync(c => c.Id == customer.AddressId);

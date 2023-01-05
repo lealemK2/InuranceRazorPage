@@ -47,7 +47,8 @@ namespace InuranceRazorPage.Pages.InsuredPerson
         {
             if (_context != null)
             {
-                Customer = _context.Customers.Include(c => c.Cbhi).Include(c => c.Cbhi.Package).FirstOrDefault(c => c.Id == id);
+                Customer = _context.Customers.Include(c => c.Cbhi).Include(c => c.Cbhi.Package)
+                    .FirstOrDefault(c => c.Id == id);
             }
             if (Customer == null)
             {
@@ -64,7 +65,8 @@ namespace InuranceRazorPage.Pages.InsuredPerson
             payment.PayableMembers = Customer.Cbhi.PayableMembers;
             payment.AdditionalMembers = Customer.Cbhi.AdditionalMembers;
             payment.LimitOfMembersPerPackage= Customer.Cbhi.Package.MaxNumberOfAdult;
-            payment.Amount = payment.PackageFee + (payment.AdditionalMembers * payment.AdditionalFeePerMember);
+            payment.Amount = payment.PackageFee + 
+                        (payment.AdditionalMembers * payment.AdditionalFeePerMember);
 
             var cbhi= _context.Cbhis.FirstOrDefault(c => c.Id == Customer.CbhiId);
             cbhi.StartDate = DateTime.Now;

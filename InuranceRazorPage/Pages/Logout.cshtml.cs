@@ -10,16 +10,9 @@ namespace InuranceRazorPage.Pages
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            //if (!string.IsNullOrEmpty(ErrorMessage))
-            //{
-            //    ModelState.AddModelError(string.Empty, ErrorMessage);
-            //}
-
             // Clear the existing external cookie
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
-
-            //ReturnUrl = returnUrl;
             returnUrl ??= Url.Content("~/");
             return LocalRedirect(returnUrl);
         }
