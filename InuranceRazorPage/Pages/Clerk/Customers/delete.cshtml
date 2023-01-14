@@ -1,0 +1,68 @@
+﻿@page
+@model InuranceRazorPage.Pages.Clerk.Customers.DeleteModel
+@{
+    Layout = "_form";
+}
+
+
+<div class="col-lg-8" style="margin-top:100px">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.Firstname</p>
+                    <p class="text-muted mb-0">@Model.Customer.Fathername</p>
+                    <p class="text-muted mb-0">@Model.Customer.Lastname</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">CBHI ID</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.LoginCbhi</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.Phone</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Gender</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.Gender</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Birthdate</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.Dob.Day/@Model.Customer.Dob.Month/@Model.Customer.Dob.Year</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <form method="post">
+        <div class="button">
+            <input type="submit" value="Delete">
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-page="./ManageAccounts">Back to List</a>

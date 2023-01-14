@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace InuranceRazorPage.Pages.Manager.Enrollment
+namespace InuranceRazorPage.Pages
 {
-    public class CreateModel : PageModel
+    public class ManagerAdminModelModel : PageModel
     {
         public void OnGet()
         {

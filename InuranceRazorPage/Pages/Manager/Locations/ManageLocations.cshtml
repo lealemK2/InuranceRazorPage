@@ -1,0 +1,101 @@
+﻿@page
+@model InuranceRazorPage.Pages.Manager.Locations.ManageLocationsModel
+@{
+    Layout = "_Dashboard";
+}
+
+
+<!-- top navigation bar -->
+<partial name="_DashboardNavPartial"></partial>
+<!-- top navigation bar -->
+<!-- offcanvas -->
+<partial name="_ManagerPartial"></partial>
+<!-- offcanvas -->
+
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Manage Locations</h4>
+            </div>
+        </div>
+        <a asp-page="./create">
+            <button type="button" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create new Location
+            </button>
+        </a>
+
+        <div class="row" style="margin-top : 20px">
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="bi bi-table me-2"></i></span> Locations
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            @*<table id="example"
+                                   class="table table-striped data-table"
+                                   style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Adult Limit</th>
+                                        <th>Additional fee</th>
+                                        <th>can Add</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Locations)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Price)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaxNumberOfAdult)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AdditionalFeePerAdult)
+                                            </td>
+                                            <td>
+                                                @(item.CanAddMember ? "Yes" : "No")
+                                            </td>
+                                            <td>
+                                                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-warning "><i class="bi bi-ticket-detailed"></i></a>
+                                                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="bi bi-archive"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Adult Limit</th>
+                                        <th>Additional fee</th>
+                                        <th>can Add</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>*@
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</main>

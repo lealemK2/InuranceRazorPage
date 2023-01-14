@@ -16,3 +16,6 @@ html {
 body {
   margin-bottom: 60px;
 }
+.blu-blu-gradient {
+    background: linear-gradient(135deg, #71b7e6, #9b59b6) !important;
+}

@@ -1,15 +1,11 @@
 using InuranceRazorPage.Data;
-using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Security.Principal;
 
-namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
+namespace InuranceRazorPage.Pages.Clerk.Customers
 {
-
     public class DeleteModel : PageModel
     {
         private readonly InuranceRazorPageContext _context;
@@ -19,13 +15,13 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             _context = context;
         }
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (_context.Accounts != null)
             {
-                Account = await _context.Accounts.Include(a => a.role).FirstOrDefaultAsync(a => a.Id == id);
+                Customer = await _context.Customers.FirstOrDefaultAsync(a => a.Id == id);
             }
             return Page();
         }
@@ -34,18 +30,15 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         {
             if (_context.Accounts != null)
             {
-                Account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
-                if(Account != null)
+                Customer = await _context.Customers.FirstOrDefaultAsync(a => a.Id == id);
+                if (Customer != null)
                 {
-                    _context.Accounts.Remove(Account);
+                    _context.Customers.Remove(Customer);
                     await _context.SaveChangesAsync();
                 }
             }
 
-            return RedirectToPage("./ManageAccounts");
+            return RedirectToPage("./ManageCustomers");
         }
-
-
     }
-
 }
