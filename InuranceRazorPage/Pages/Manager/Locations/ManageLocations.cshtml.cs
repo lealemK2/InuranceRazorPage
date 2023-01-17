@@ -20,7 +20,7 @@ namespace InuranceRazorPage.Pages.Manager.Locations
         {
             if (_context.Customers != null)
             {
-                Locations = await _context.Locations.ToListAsync();
+                Locations = await _context.Locations.Include(c=>c.Subcity).ToListAsync();
             }
             else
             {

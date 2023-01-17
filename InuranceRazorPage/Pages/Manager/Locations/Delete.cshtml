@@ -1,0 +1,40 @@
+﻿@page
+@model InuranceRazorPage.Pages.Manager.Locations.DeleteModel
+@{
+    Layout = "_Form";
+}
+
+<div class="col-lg-8" style="margin-top:100px">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Subcity Name</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Location.Subcity.Name</p>
+                    <span asp-validation-for="Location.Subcity.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Woreda Range</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Location.woreda</p>
+                    <span asp-validation-for="Location.woreda" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <form method="post">
+            <div class="button" style="width:50%; margin-left:auto; margin-right:auto;">
+                <input type="submit" value="Delete">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./ManageLocations">Back to List</a>
+</div>

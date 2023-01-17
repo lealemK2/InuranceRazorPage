@@ -34,16 +34,13 @@
                     <div class="card-body">
                         <div class="table-responsive">
 
-                            @*<table id="example"
+                            <table id="example"
                                    class="table table-striped data-table"
                                    style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Adult Limit</th>
-                                        <th>Additional fee</th>
-                                        <th>can Add</th>
+                                        <th>Subcity Name</th>
+                                        <th>Woreda Range</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -52,21 +49,12 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Name)
+                                                @Html.DisplayFor(modelItem => item.Subcity.Name)
                                             </td>
 
-
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Price)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.MaxNumberOfAdult)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.AdditionalFeePerAdult)
-                                            </td>
-                                            <td>
-                                                @(item.CanAddMember ? "Yes" : "No")
+                                                1-
+                                                @Html.DisplayFor(modelItem => item.woreda)
                                             </td>
                                             <td>
                                                 <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
@@ -78,15 +66,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Adult Limit</th>
-                                        <th>Additional fee</th>
-                                        <th>can Add</th>
+                                        <th>Subcity Name</th>
+                                        <th>Woreda Range</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
-                            </table>*@
+                            </table>
 
 
                         </div>
