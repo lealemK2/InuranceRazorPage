@@ -34,7 +34,7 @@ namespace InuranceRazorPage.Pages.Manager.Locations
                     var address = await _context.Addresses.FirstOrDefaultAsync(a => a.SubcityId == Location.SubcityId);
                     if (address != null)
                     {
-                        ModelState.AddModelError("Location.Subcity.Name", "Can't delete location when is currently used by someone");
+                        ModelState.AddModelError("Location.Subcity.Name", "Can't delete location when it is currently used by someone");
                     }
                     if (!ModelState.IsValid)
                     {

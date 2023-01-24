@@ -1,0 +1,92 @@
+﻿@page
+@model InuranceRazorPage.Pages.Clerk.Customers.DetailsModel
+@{
+    Layout = "_form";
+}
+
+
+<div class="col-lg-8" style="margin-top:100px">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col">
+                    <p class="text-muted mb-0">@Model.CustomerDto.Firstname @Model.CustomerDto.Fathername @Model.CustomerDto.Lastname</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">CBHI ID</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.LoginCbhi</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Package Type</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@(Model.Customer.Cbhi.PackageId==1?"Basic":"Family")</p> 
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Relation</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.Customer.Relation</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.CustomerDto.Phone</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Gender</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.CustomerDto.Gender</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Birthdate</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">@Model.CustomerDto.Dob.Day/@Model.CustomerDto.Dob.Month/@Model.CustomerDto.Dob.Year</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col">
+                            <p class="text-muted mb-0">@Model.Customer.Address.Subcity.Name , Woreda @Model.CustomerDto.Woreda, House# @Model.CustomerDto.HouseNumber</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+<div>
+    <a asp-page="./ManageCustomers">Back to List</a>
+</div>

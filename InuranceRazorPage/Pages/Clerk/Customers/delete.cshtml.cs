@@ -30,9 +30,23 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
         {
             if (_context.Accounts != null)
             {
-                Customer = await _context.Customers.FirstOrDefaultAsync(a => a.Id == id);
+                Customer = await _context.Customers.Include(c=>c.Address).Include(c => c.Cbhi).FirstOrDefaultAsync(a => a.Id == id);
+
                 if (Customer != null)
                 {
+                    var cbhi = await _context.Cbhis.FirstOrDefaultAsync(c => c.Id == Customer.CbhiId);
+                    if (cbhi != null)
+                    {
+                        cbhi.NthTracker--;
+                        cbhi.PayableMembers--;
+
+                    }
+
+                    if (Customer.Cbhi.TotalMembers == 1)
+                    {
+                        var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Customer.AddressId);
+                        _context.Addresses.Remove(address);
+                    }
                     _context.Customers.Remove(Customer);
                     await _context.SaveChangesAsync();
                 }

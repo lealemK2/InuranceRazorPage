@@ -111,6 +111,15 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 return Page();
             }
+            var location = await _context.Locations.Include(l => l.Subcity).FirstOrDefaultAsync(l => AccountDto.SubcityId == l.SubcityId && l.woreda < AccountDto.Woreda);
+            if (location != null)
+            {
+                ModelState.AddModelError("AccountDto.Woreda", location.Subcity.Name + " subcity has woreda range from 1 upto " + location.woreda);
+            }
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             var account = new Account();
             account=await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
             account.Firstname = AccountDto.Firstname;

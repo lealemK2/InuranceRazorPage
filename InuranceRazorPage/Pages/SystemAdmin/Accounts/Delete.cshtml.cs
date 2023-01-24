@@ -37,6 +37,8 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 Account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id);
                 if(Account != null)
                 {
+                    var address= await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Account.AddressId);
+                    _context.Addresses.Remove(address);
                     _context.Accounts.Remove(Account);
                     await _context.SaveChangesAsync();
                 }

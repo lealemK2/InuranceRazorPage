@@ -55,6 +55,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 Subcities = new List<Subcity>();
             }
+            
             AccountDto = new AccountDto();
             AccountDto.Dob = DateTime.Now.AddYears(-18);
         }
@@ -79,6 +80,8 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 Subcities = new List<Subcity>();
             }
+
+            
             if (AccountDto.Gender == null) 
             {
                 ModelState.AddModelError("AccountDto.Gender", "The Gender field is required");
@@ -98,6 +101,15 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 ModelState.AddModelError("AccountDto.Username", "Username is already taken!");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            var location = await _context.Locations.Include(l=>l.Subcity).FirstOrDefaultAsync(l => AccountDto.SubcityId == l.SubcityId && l.woreda < AccountDto.Woreda);
+            if (location != null)
+            {
+                ModelState.AddModelError("AccountDto.Woreda", location.Subcity.Name+" subcity has woreda range from 1 upto "+location.woreda);
+            }
             if (!ModelState.IsValid)
             {
                 return Page();

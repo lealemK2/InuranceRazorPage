@@ -146,7 +146,16 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             {
                 return Page();
             }
-             
+            var location = await _context.Locations.Include(l => l.Subcity).FirstOrDefaultAsync(l => CustomerDto.SubcityId == l.SubcityId && l.woreda < CustomerDto.Woreda);
+            if (location != null)
+            {
+                ModelState.AddModelError("CustomerDto.Woreda", location.Subcity.Name + " subcity has woreda range from 1 upto " + location.woreda);
+            }
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             customer.Firstname = CustomerDto.Firstname; 
             customer.Fathername = CustomerDto.Fathername;
             customer.Lastname = CustomerDto.Lastname;

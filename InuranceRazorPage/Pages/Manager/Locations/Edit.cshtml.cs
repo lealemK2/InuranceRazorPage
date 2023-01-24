@@ -38,7 +38,7 @@ namespace InuranceRazorPage.Pages.Manager.Locations
         {
 
             ModelState.Remove("Location.Subcity");
-            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Woreda > Location.woreda);
+            var address = await _context.Addresses.Include(l=>l.Subcity).FirstOrDefaultAsync(a => a.Subcity.Name.Equals(Location.Subcity.Name) && a.Woreda > Location.woreda);
             if (address != null)
             {
                 ModelState.AddModelError("Location.Woreda", "Can't edit location when there is an address entry with a larger woreda number");
