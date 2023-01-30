@@ -7,7 +7,7 @@ using System.Data;
 
 namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 {
-    [Authorize(Roles = "SystemAdmin")]
+    [Authorize(Roles = "SystemAdmin,Manager,Clerk")]
     public class DetailModel : PageModel
     {
         private readonly InuranceRazorPage.Data.InuranceRazorPageContext _context;
@@ -17,14 +17,19 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             _context = context;
         }
         public Account Account { get; set; } = default!;
+        [BindProperty]
+        public string UrlParam { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id,string urlP)
         {
             if (_context.Accounts != null)
             {
                 Account=await _context.Accounts.Include(a => a.role).FirstOrDefaultAsync(a => a.Id == id);
             }
+            UrlParam = urlP ?? string.Empty;
             return Page();
         }
     }
 }
+
+

@@ -41,9 +41,9 @@
                                         <th>Name</th>
                                         <th>Paid</th>
                                         <th>Gender</th>
-                                        <th>Package</th>
                                         <th>Relation</th>
                                         <th>Cbhi Id</th>
+                                        <th>Package</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -62,15 +62,15 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Gender)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cbhi.Package.Name)
-                                            </td>
+                                            </td>                                            
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Relation)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.LoginCbhi)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cbhi.Package.Name)
                                             </td>
                                             <td>
                                                 @if (item.Cbhi.PackageId == 2)
@@ -90,9 +90,9 @@
                                         <th>Name</th>
                                         <th>Paid</th>
                                         <th>Gender</th>
-                                        <th>Package</th>
                                         <th>Relation</th>
                                         <th>Cbhi Id</th>
+                                        <th>Package</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

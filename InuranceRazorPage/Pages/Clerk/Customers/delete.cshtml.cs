@@ -1,4 +1,5 @@
 using InuranceRazorPage.Data;
+using InuranceRazorPage.Dto;
 using InuranceRazorPage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -38,17 +39,37 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
                     if (cbhi != null)
                     {
                         cbhi.NthTracker--;
-                        cbhi.PayableMembers--;
-
+                        bool isPayableMember = false;
+                        if (Customer.Dob.Year > 18)
+                        {
+                            isPayableMember = true;
+                            if (Customer.IsDisabled)
+                            {
+                                isPayableMember = false;
+                            }
+                        }
+                        if (isPayableMember)
+                        {
+                            cbhi.PayableMembers--;
+                        }
                     }
 
-                    if (Customer.Cbhi.TotalMembers == 1)
+                    if (!Customer.Cbhi.IsPaid)
                     {
-                        var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Customer.AddressId);
-                        _context.Addresses.Remove(address);
+                        if (Customer.Cbhi.TotalMembers == 1)
+                        {
+                            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Customer.AddressId);
+                            _context.Addresses.Remove(address);
+                        }
+                        _context.Customers.Remove(Customer);
                     }
-                    _context.Customers.Remove(Customer);
+                    if (Customer.Cbhi.IsPaid)
+                    {
+                        Customer.IsArchived = true;
+                        _context.Customers.Update(Customer);
+                    }
                     await _context.SaveChangesAsync();
+
                 }
             }
 

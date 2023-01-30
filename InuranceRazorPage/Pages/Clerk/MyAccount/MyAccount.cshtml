@@ -1,0 +1,34 @@
+﻿@page
+@model InuranceRazorPage.Pages.Clerk.MyAccount.MyAccountModel
+@{
+    Layout = "_Dashboard";
+}
+
+
+<!-- top navigation bar -->
+<partial name="_DashboardNavPartial"></partial>
+<!-- top navigation bar -->
+<!-- offcanvas -->
+<partial name="_ClerkPartial"></partial>
+<!-- offcanvas -->
+
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+
+
+        <div class="jumbotron">
+            <h3 class="display-4 text-secondary">View Profile</h3>
+            <p class="lead">
+                <a asp-page="/SystemAdmin/Accounts/Details" asp-route-id="@Model.Account.Id" class="btn btn-primary btn-lg" role="button">View Profile</a>
+            </p>
+            <hr class="my-4">
+        </div>
+        <div class="jumbotron text-secondary">
+            <h3 class="display-4">Change Password</h3>
+            <p class="lead">
+                <a asp-page="/SystemAdmin/MyAccount/ChangePassword" asp-route-id="@Model.Account.Id" class="btn btn-primary btn-lg" role="button">Change Password</a>
+            </p>
+        </div>
+
+    </div>
+</main>

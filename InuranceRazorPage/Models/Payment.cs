@@ -7,9 +7,9 @@ namespace InuranceRazorPage.Models
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-        public int CbhiId { get; set; }
+        public int CbhiId { get; set; }//////////
         public Cbhi Cbhi { get; set; } 
-        public int CustomerId { get; set; }
+        public int CustomerId { get; set; }//// ///
         public Customer Customer { get; set; }
         public String PackageName { get; set; }
         public decimal AdditionalFeePerMember { get; set; }

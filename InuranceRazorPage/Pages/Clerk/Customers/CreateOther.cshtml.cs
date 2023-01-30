@@ -77,14 +77,6 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
                 }
             }
 
-
-            //Address address = new Address()
-            //{
-            //    SubcityId = prevCustomer.Address.SubcityId,
-            //    Woreda = prevCustomer.Address.Woreda,
-            //    HouseNumber = prevCustomer.Address.SubcityId,
-            //};
-
             if (!ModelState.IsValid)
             {
                 return Page();

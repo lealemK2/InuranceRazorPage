@@ -68,10 +68,6 @@
                     </select>
                     <span asp-validation-for="AccountDto.RoleId" class="text-danger"></span>
                 </div>
-                
-                <datalist>
-
-                </datalist>
                 <div class="input-box">
                     <label asp-for="AccountDto.Password" class="details"></label>
                     <input type="password" asp-for="AccountDto.Password" placeholder="Enter your Password" class="form-control" />
@@ -111,9 +107,18 @@
         </form>
     </div>
 </div>
-<div>
-    <a asp-page="./ManageAccounts">Go back</a>
-</div>
+@if (User.IsInRole("SystemAdmin") && !Model.UrlParam.Equals("MyAccountSystemAdmin"))
+{
+    <div>
+        <a asp-page="./ManageAccounts">Go Back</a>
+    </div>
+}
+@if (User.IsInRole("SystemAdmin") && Model.UrlParam.Equals("MyAccountSystemAdmin"))
+{
+    <div>
+        <a asp-page="/SystemAdmin/MyAccount/MyAccount">Go Back</a>
+    </div>
+}
 
 <script type="text/javascript">
     $("#gender").prop('selectedIndex', 2);

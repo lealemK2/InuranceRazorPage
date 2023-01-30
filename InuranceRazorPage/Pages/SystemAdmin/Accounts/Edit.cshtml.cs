@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Security.Principal;
 using System.Xml.Linq;
 
@@ -29,9 +30,10 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         public string[] GenderOptions = new[] { "Male", "Female" };
         public IList<Role> Roles { get; set; } = default!;
         public IList<Subcity> Subcities { get; set; } = default!;
+        public string UrlParam { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, string urlP)
         {
             if (_context.Roles != null)
             {
@@ -62,6 +64,8 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             AccountDto.SubcityId = account.Address == null ? 0: account.Address.SubcityId;
             AccountDto.Woreda= account.Address == null ? 0 : account.Address.Woreda;
             AccountDto.HouseNumber= account.Address == null ? 0 : account.Address.HouseNumber;
+
+            UrlParam = urlP ?? string.Empty;
 
             return Page();
         }
@@ -137,7 +141,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             address.HouseNumber = AccountDto.HouseNumber;
 
 
-            if (!string.IsNullOrEmpty(AccountDto.Password))//not the same
+            if (!string.IsNullOrEmpty(AccountDto.Password))
             {
                 
                 CreatePasswordHash(AccountDto.Password, out byte[] passwordHash, 
@@ -164,6 +168,10 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
                 }
             }
 
+            if (UrlParam.Equals("MyAccountSystemAdmin"))
+            {
+                return RedirectToPage("/SystemAdmin/MyAccount/MyAccount");
+            }
             return RedirectToPage("./ManageAccounts");
         }
 

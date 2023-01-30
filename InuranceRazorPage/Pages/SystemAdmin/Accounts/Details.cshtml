@@ -153,7 +153,28 @@
     </div>
 </div>
 
+@if (User.IsInRole("SystemAdmin") && Model.UrlParam.Equals("MyAccountSystemAdmin"))
+{
+    <div>
+        <a asp-page="../MyAccount/MyAccount">Back to List</a>
+    </div>
+}
 
-<div>
-    <a asp-page="./ManageAccounts">Back to List</a>
-</div>
+@if (User.IsInRole("SystemAdmin") && !Model.UrlParam.Equals("MyAccountSystemAdmin"))
+{
+    <div>
+        <a asp-page="./ManageAccounts">Back to List</a>
+    </div>
+}
+
+@if(User.IsInRole("Manager")){
+    <div>
+        <a asp-page="/Manager/MyAccount/MyAccount">Back to List</a>
+    </div>
+}
+@if (User.IsInRole("Clerk"))
+{
+    <div>
+        <a asp-page="/Clerk/MyAccount/MyAccount">Back to List</a>
+    </div>
+}
