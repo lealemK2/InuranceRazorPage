@@ -35,6 +35,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
 
         public async Task<IActionResult> OnGetAsync(int? id, string urlP)
         {
+            
             if (_context.Roles != null)
             {
                 Roles = await _context.Roles.ToListAsync();
@@ -70,8 +71,10 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id )
+        public async Task<IActionResult> OnPostAsync(int? id, string urlP)
         {
+            UrlParam = urlP ?? string.Empty;
+
             if (_context.Roles != null)
             {
                 Roles = await _context.Roles.ToListAsync();
@@ -101,6 +104,14 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 ModelState.AddModelError("AccountDto.SubcityId", "Please select a Subcity");
             }
+            DateTime today = DateTime.Today;
+            int age = today.Year - AccountDto.Dob.Year;
+            if (AccountDto.Dob > today.AddYears(-age))
+                age--;
+            if (age < 18)
+            {
+                ModelState.AddModelError("AccountDto.Dob", "Age must be above 18");
+            }
             if (AccountDto.Woreda == 0)
             {
                 ModelState.AddModelError("AccountDto.Woreda", "Please select a Woreda");
@@ -110,7 +121,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 ModelState.Remove("AccountDto.Password");
             }
-
+            ModelState.Remove("urlP");
             if (!ModelState.IsValid)
             {
                 return Page();

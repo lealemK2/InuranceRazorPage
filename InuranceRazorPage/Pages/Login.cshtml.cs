@@ -28,7 +28,7 @@ namespace InuranceRazorPage.Pages
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            
             var error=ModelState.ToString();
             ModelState.Remove("returnUrl");
             if (!ModelState.IsValid)
@@ -65,6 +65,22 @@ namespace InuranceRazorPage.Pages
                     new ClaimsPrincipal(identity),
                     authProperties);
 
+            if (returnUrl == null)
+            {
+                if (account.role.RoleName.Equals("Manager"))
+                {
+                    returnUrl = "/Manager/packages/ManagePackages";
+                }
+                if (account.role.RoleName.Equals("SystemAdmin"))
+                {
+                    returnUrl = "/SystemAdmin/Accounts/ManageAccounts";
+                }
+                if (account.role.RoleName.Equals("Clerk"))
+                {
+                    returnUrl = "/Clerk/Customers/ManageCustomers";
+                }
+            }
+            returnUrl ??= Url.Content("~/");
             return LocalRedirect(returnUrl);
         }
 

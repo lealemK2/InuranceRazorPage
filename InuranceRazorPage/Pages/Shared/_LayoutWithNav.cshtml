@@ -25,12 +25,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="#">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="#">Gallery</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Others/ContactUs">Contact Us</a>
                         </li>
                         <li class="nav-item">
@@ -39,19 +33,19 @@
                         @if (User.IsInRole("SystemAdmin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/SystemAdmin/index">Admin DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/SystemAdmin/Accounts/ManageAccounts">Admin</a>
                             </li>
                         }
                         @if (User.IsInRole("Clerk"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/index">Clerk DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Clerk/Customers/ManageCustomers">Clerk </a>
                             </li>
                         }
                         @if (User.IsInRole("Manager"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manager/index">Manager DashBoard</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manager/packages/ManagePackages">Manager </a>
                             </li>
                         }
                     </ul>

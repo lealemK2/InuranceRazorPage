@@ -85,6 +85,7 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
             {
                 ModelState.AddModelError("CustomerDto.PackageId", "Please select a Package");
             }
+            
             if (CustomerDto.SubcityId == 0)
             {
                 ModelState.AddModelError("CustomerDto.SubcityId", "Please select a Subcity");

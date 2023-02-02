@@ -24,7 +24,7 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
         {
             if (_context.Accounts != null)
             {
-                Account=await _context.Accounts.Include(a => a.role).FirstOrDefaultAsync(a => a.Id == id);
+                Account=await _context.Accounts.Include(a => a.role).Include(a => a.Address).Include(a => a.Address.Subcity).FirstOrDefaultAsync(a => a.Id == id);
             }
             UrlParam = urlP ?? string.Empty;
             return Page();

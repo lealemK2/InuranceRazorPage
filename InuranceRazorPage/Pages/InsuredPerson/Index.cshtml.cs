@@ -23,6 +23,8 @@ namespace InuranceRazorPage.Pages.InsuredPerson
         public int Age { get; set; }
         public string Package { get; set; }
         public String EndDateStr { get; set; }
+        public TimeSpan LeftToExprire { get; set; }
+        public double DaysLeft { get; set; }
 
 
 
@@ -45,6 +47,11 @@ namespace InuranceRazorPage.Pages.InsuredPerson
                 Package = (Customer.Cbhi.PackageId == 2) ? "Family" : "Basic";
                 var EndD = Customer.Cbhi.EndDate;
                 EndDateStr = String.Concat(EndD.Day,"/",EndD.Month,"/",EndD.Year);
+                LeftToExprire = EndD.Subtract(DateTime.Now);
+                LeftToExprire = LeftToExprire;
+                DaysLeft=LeftToExprire.TotalDays;
+                DaysLeft = (int)DaysLeft;
+
             }
 
         }

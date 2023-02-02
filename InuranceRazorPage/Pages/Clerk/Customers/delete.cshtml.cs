@@ -36,38 +36,39 @@ namespace InuranceRazorPage.Pages.Clerk.Customers
                 if (Customer != null)
                 {
                     var cbhi = await _context.Cbhis.FirstOrDefaultAsync(c => c.Id == Customer.CbhiId);
-                    if (cbhi != null)
+                    if(cbhi == null)
                     {
-                        cbhi.NthTracker--;
-                        bool isPayableMember = false;
-                        if (Customer.Dob.Year > 18)
+                        return NotFound();
+                    }
+                    cbhi.NthTracker--;
+                    bool isPayableMember = false;
+                    if (Customer.Dob.Year > 18)
+                    {
+                        isPayableMember = true;
+                        if (Customer.IsDisabled)
                         {
-                            isPayableMember = true;
-                            if (Customer.IsDisabled)
-                            {
-                                isPayableMember = false;
-                            }
+                            isPayableMember = false;
                         }
-                        if (isPayableMember)
-                        {
-                            cbhi.PayableMembers--;
-                        }
+                    }
+                    if (isPayableMember)
+                    {
+                        cbhi.PayableMembers--;
+                    }                                   
+                                     
+                    if (Customer.Cbhi.TotalMembers == 1)
+                    {
+                        var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Customer.AddressId);
+                        _context.Addresses.Remove(address);
+                        _context.Cbhis.Remove(cbhi);
+
+                    }
+                    _context.Customers.Remove(Customer);
+                    
+                    if (cbhi.TotalMembers > 1)
+                    {
+                        _context.Cbhis.Update(cbhi);
                     }
 
-                    if (!Customer.Cbhi.IsPaid)
-                    {
-                        if (Customer.Cbhi.TotalMembers == 1)
-                        {
-                            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == Customer.AddressId);
-                            _context.Addresses.Remove(address);
-                        }
-                        _context.Customers.Remove(Customer);
-                    }
-                    if (Customer.Cbhi.IsPaid)
-                    {
-                        Customer.IsArchived = true;
-                        _context.Customers.Update(Customer);
-                    }
                     await _context.SaveChangesAsync();
 
                 }

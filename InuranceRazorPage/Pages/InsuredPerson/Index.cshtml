@@ -47,7 +47,14 @@
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>Expires</h6>
-                                        <p class="text-muted">@(Model.Customer.Cbhi.IsPaid ? @Model.EndDateStr: "-")</p>
+                                        @if (DateTime.Compare(DateTime.Now, @Model.Customer.Cbhi.EndDate)>0)//expired
+                                        {
+
+                                        }else{//has not expired
+                                            <p class="text-muted">@(Model.Customer.Cbhi.IsPaid ? @Model.EndDateStr : "-")</p>
+                                            <p class="text-muted">@(Model.Customer.Cbhi.IsPaid ? @Model.DaysLeft+" Days left" : "")</p>
+                                        }
+
                                     </div>
                                     @if (!Model.Customer.Cbhi.IsPaid)
                                     {
@@ -57,6 +64,14 @@
                                             </a>
                                         </div>
 
+                                    }
+                                    @if (Model.Customer.Cbhi.IsPaid && (DateTime.Compare(Model.Customer.Cbhi.EndDate.AddMonths(-3),DateTime.Now) < 0))
+                                    {
+                                        <div class="col-6 mb-3">
+                                            <a asp-page="./renew" asp-route-id="@Model.Customer.Id">
+                                                <button type="button" class="btn btn-success rounded-pill">Renew</button>
+                                            </a>
+                                         </div>
                                     }
                                 </div>
                                 <div class="d-flex justify-content-start">

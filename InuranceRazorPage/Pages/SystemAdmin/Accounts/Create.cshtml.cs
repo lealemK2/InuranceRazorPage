@@ -91,6 +91,14 @@ namespace InuranceRazorPage.Pages.SystemAdmin.Accounts
             {
                 ModelState.AddModelError("AccountDto.RoleId", "Please select a Role");
             }
+            DateTime today = DateTime.Today;
+            int age = today.Year - AccountDto.Dob.Year;
+            if (AccountDto.Dob > today.AddYears(-age))
+                age--;
+            if (age < 18)
+            {
+                ModelState.AddModelError("AccountDto.Dob", "Age must be above 18");
+            }
             if (AccountDto.SubcityId==0)
             {
                 ModelState.AddModelError("AccountDto.SubcityId", "Please select a Subcity");
